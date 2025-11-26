@@ -21,8 +21,8 @@ token = os.getenv("DISCORD_TOKEN")
 steamKey = os.getenv("STEAM_API_KEY")
 testingGuildId = os.getenv("TESTGUILDID")
 
-if testingGuildId != 0:
-    GUILD_ID = discord.Object(id=1356673715181588682)
+if testingGuildId != "0":
+    GUILD_ID = discord.Object(id=testingGuildId)
 else:
     GUILD_ID = None
 
@@ -37,11 +37,13 @@ async def on_ready():
     bot.remove_command("help") #the default help command exposes this bots' admin commands.
     synced = await bot.tree.sync(guild=GUILD_ID)
     print(f"synced {len(synced)}")
-    refreshAchInfo.start()
 
 @tasks.loop(hours=48)
 async def refreshAchInfo():
+    await bot.wait_until_ready()
+
     utils.updateAchInfoJson(steamKey=steamKey)
+    print("refreshed ach info")
 
 #----------------------------------------------------------------------------------------
 
@@ -449,6 +451,8 @@ async def on_command_error(ctx, error):
                 return
             
         await ctx.send(embed=utils.errorEmbed("Bad argument"))
+
+refreshAchInfo.start()
 
 bot.run(token)
 
