@@ -330,11 +330,13 @@ async def adminHelp(interaction:discord.Interaction):
     aHelpEmbed = discord.Embed(title="Famine Admin Commands Guide", description="-# Guide to the admin commands for this bot.\n-# ALL admin commands (except this one) are prefixed with \"f!\" and are not accessible via the slash command autofill.")
     
     aHelpEmbed.add_field(name="f!restrictToChannel", value=f"Restricts command usages by non-admins to a specific channel. Use either the channel ID or a link to the channel as the parameter. To lift the restriction, type \"none\" as the parameter.\n\nUsage example: `f!restrictToChannel 1433446281514188872`\n\nCommands are currently restricted to channel: <#{gSettings["cmdChannel"]}>")
+    aHelpEmbed.add_field(name="f!setUpdatesChannel", value=f"Sets a channel for the bot to send patch notes/privacy policy update notices. To make it send to no channels, type \"none\" as the parameter.\n\nUsage example: `f!setUpdatesChannel 1433446281514188872`\n\nPatch notes are currently sent to channel: <#{gSettings["patchChannel"]}>")
+    aHelpEmbed.add_field(name="f!deleteGuildSettings", value=f"Deletes all settings for this guild. Use this command when you about to remove this application if you want to ensure that no data about your guild is kept by the bot.")
 
     await interaction.response.send_message(embed=aHelpEmbed, ephemeral=True)
 
 
-@bot.command(name="restrictToChannel", help="Restricts command usages for non-admins to a specific channel.\n\n usage: f!restrictToChannel [channel link/id]")
+@bot.command(name="restrictToChannel")
 async def restrictCommandsToChannel(ctx, channel:discord.TextChannel):
 
     if ctx.guild is None:
@@ -354,6 +356,66 @@ async def restrictCommandsToChannel(ctx, channel:discord.TextChannel):
     
     await ctx.send("updated channel restriction settings for this guild.")
 
+@bot.command(name="deleteGuildSettings")
+async def deleteSettings(ctx):
+    if ctx.guild is None:
+        await ctx.send(embed=utils.errorEmbed("This command is for guilds only"))
+        return
+    
+    if not ctx.author.guild_permissions.administrator:
+        await ctx.send("This command is guild administrator only.")
+        return
+    
+    os.remove(os.path.join(utils.guildSDirPath, f"{ctx.guild.id}.json"))
+
+    await ctx.send("Deleted guild settings file.\n\nNote: use of ANY command in this guild will create a new settings file with the default guild settings.")
+
+@bot.command(name="setUpdatesChannel")
+async def setUpdateChannel(ctx, channel:discord.TextChannel):
+
+    if ctx.guild is None:
+        await ctx.send(embed=utils.errorEmbed("This command is for guilds only"))
+        return
+    
+    if not ctx.author.guild_permissions.administrator:
+        await ctx.send("This command is guild administrator only.")
+        return
+    
+    gSettings = utils.getGuildSettings(ctx.guild.id)
+
+    gSettings["patchChannel"] = str(channel.id)
+
+    with open(os.path.join(utils.guildSDirPath, f"{ctx.guild.id}.json"), "w") as settings:
+        json.dump(gSettings, settings, indent=4)
+    
+    await ctx.send("updated settings.")
+
+#Dev only commands.
+
+@bot.command(name="sendPatch")
+async def sendPatch(ctx, *, message: str = None):
+    
+    if ctx.author.id != 1255077468130381874:
+        await ctx.send("Dev only.")
+        return
+    
+    for guild in bot.guilds:
+
+        gSettings = utils.getGuildSettings(guild.id)
+        patchChannel = gSettings["patchChannel"]
+
+        if patchChannel == "none":
+            continue
+
+        channel = bot.get_channel(int(patchChannel))
+        try:
+            await channel.send(f"Famine update:\n{message}")
+        except:
+            print(f"failed to send patch to {guild.id}")
+            
+
+
+    
 #command error handler
 @bot.event
 async def on_command_error(ctx, error):
@@ -373,6 +435,17 @@ async def on_command_error(ctx, error):
                     json.dump(gSettings, settings, indent=4)
 
                 await ctx.send("Removed channel restrictions.")
+                return
+        elif ctx.command.name == "setUpdatesChannel":
+            if ctx.message.content.lower().split()[1] == "none":
+                gSettings = utils.getGuildSettings(ctx.guild.id)
+
+                gSettings["patchChannel"] = "none"
+                
+                with open(os.path.join(utils.guildSDirPath, f"{ctx.guild.id}.json"), "w") as settings:
+                    json.dump(gSettings, settings, indent=4)
+
+                await ctx.send("Removed update notifs.")
                 return
             
         await ctx.send(embed=utils.errorEmbed("Bad argument"))

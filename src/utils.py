@@ -22,7 +22,8 @@ def getGuildSettings(guildID):
     except FileNotFoundError:
         with open(os.path.join(guildSDirPath, f"{guildID}.json"), "w") as settings:
             default = {
-                "cmdChannel":"none"
+                "cmdChannel":"none",
+                "patchChannel":"none"
             }
             json.dump(default, settings, indent=4)
 
