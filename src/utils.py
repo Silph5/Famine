@@ -134,7 +134,6 @@ def updateAchInfoJson(steamKey):
 
         if not roleName in newDictForJson:
             newDictForJson[roleName] = {
-                "icon":ach["icon"],
                 "winAchievements":[],
                 "generalAchievements":[]
             }
@@ -146,7 +145,8 @@ def updateAchInfoJson(steamKey):
             "displayName":ach["displayName"],
             "description":ach.get("description", ""),
             "isSecret":ach["hidden"],
-            "percent":""
+            "percent":"",
+            "icon":ach["icon"]
         })
 
     #get global percents from next endpoint

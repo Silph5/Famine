@@ -145,7 +145,7 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
         authorStatsReachable = False
         
     aEmbed = discord.Embed(title=f"Achievements for {initialRoleName}:",color=Tos2Info.getRoleColour(roleName))
-    aEmbed.set_thumbnail(url=achInfoDict[roleName]["icon"])
+    aEmbed.set_thumbnail(url=achInfoDict[roleName]["generalAchievements"][0]["icon"])
 
     for ach in achInfoDict[roleName]["generalAchievements"]:
         endStr = ""
@@ -279,7 +279,7 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
         if not userAchStats["playerstats"]["achievements"][completionJsonIndex]["achieved"]:
             
             aEmbed = discord.Embed(title="Next Unobtained Achievement", color=Tos2Info.getRoleColour(roleName))
-            aEmbed.set_thumbnail(url=achInfoDict[roleName]["icon"])
+            aEmbed.set_thumbnail(url=achInfo["icon"])
 
             if achInfo["isSecret"]:
                 aEmbed.add_field(name=(f"||{achInfo["displayName"]}||"), value=f"||Hidden achievement...||\n-# `{achInfo["percent"]}% of players unlocked`", inline=False)
@@ -329,7 +329,7 @@ async def adminHelp(interaction:discord.Interaction):
     
     aHelpEmbed = discord.Embed(title="Famine Admin Commands Guide", description="-# Guide to the admin commands for this bot.\n-# ALL admin commands (except this one) are prefixed with \"f!\" and are not accessible via the slash command autofill.")
     
-    aHelpEmbed.add_field(name="f!restrictToChannel", value=f"Restricts command usages by non-admins to a specific channel. Use either the channel ID or a link to the channel as the parameter. To lift the restriction, type \"none\" as the parameter.\n\nUsage example: `f!restrictToChannel 1433446281514188872`\n\nCommands are currently restricted to channel: `{gSettings["cmdChannel"]}`")
+    aHelpEmbed.add_field(name="f!restrictToChannel", value=f"Restricts command usages by non-admins to a specific channel. Use either the channel ID or a link to the channel as the parameter. To lift the restriction, type \"none\" as the parameter.\n\nUsage example: `f!restrictToChannel 1433446281514188872`\n\nCommands are currently restricted to channel: <#{gSettings["cmdChannel"]}>")
 
     await interaction.response.send_message(embed=aHelpEmbed, ephemeral=True)
 
