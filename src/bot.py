@@ -35,8 +35,16 @@ bot = commands.Bot(command_prefix="f!", intents=intents)
 @bot.event
 async def on_ready():
     bot.remove_command("help") #the default help command exposes this bots' admin commands.
-    synced = await bot.tree.sync(guild=GUILD_ID)
-    print(f"synced {len(synced)}")
+    if not refreshAchInfo.is_running():
+        refreshAchInfo.start()
+
+    if GUILD_ID is None:
+        synced = await bot.tree.sync()
+        print(f"Globally synced {len(synced)} commands")
+    
+    else:
+        synced = await bot.tree.sync(guild=GUILD_ID)
+        print(f"Guild synced {len(synced)} commands")
 
 @tasks.loop(hours=48)
 async def refreshAchInfo():
@@ -47,7 +55,7 @@ async def refreshAchInfo():
 
 #----------------------------------------------------------------------------------------
 
-@bot.tree.command(name="linksteam", description="Links steam account to the discord bot for achievement tracking", guild=GUILD_ID)
+@bot.tree.command(name="linksteam", description="Links steam account to the discord bot for achievement tracking")
 @app_commands.describe(steam_id="User steamID")
 async def linkSteamAccount(interaction: discord.Interaction, steam_id: str):
 
@@ -77,7 +85,7 @@ async def linkSteamAccount(interaction: discord.Interaction, steam_id: str):
 
 #----------------------------------------------------------------------------------------
 
-@bot.tree.command(name="unlink", description="Unlinks your steam account from the bot", guild=GUILD_ID)
+@bot.tree.command(name="unlink", description="Unlinks your steam account from the bot")
 async def unlinkSteamAccount(interaction: discord.Interaction):
 
     if not interaction.guild is None:
@@ -102,7 +110,7 @@ async def unlinkSteamAccount(interaction: discord.Interaction):
 
 #----------------------------------------------------------------------------------------
 
-@bot.tree.command(name="achievements", description="Displays the achievements for a given role", guild=GUILD_ID)
+@bot.tree.command(name="achievements", description="Displays the achievements for a given role")
 @app_commands.describe(role_name="Full name of the TOS2 role")
 async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
 
@@ -169,7 +177,7 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
 
 #----------------------------------------------------------------------------------------
 
-@bot.tree.command(name="winstats", description="shows highest win achievement for every role, and an estimate for total wins.", guild=GUILD_ID)
+@bot.tree.command(name="winstats", description="shows highest win achievement for every role, and an estimate for total wins.")
 async def sendWinTotals(interaction:discord.Interaction):
 
     await interaction.response.defer()
@@ -235,7 +243,7 @@ async def sendWinTotals(interaction:discord.Interaction):
 #----------------------------------------------------------------------------------------
 #I'd like to keep API calls to a max of 1 per function, i'll have to make an exception for it here unless i find a better a method.
 
-@bot.tree.command(name="nextunobtained", description="Shows the most common achievement that you haven't unlocked", guild=GUILD_ID)
+@bot.tree.command(name="nextunobtained", description="Shows the most common achievement that you haven't unlocked")
 async def nextUnobtainedAch(interaction:discord.Interaction):
     await interaction.response.defer()
 
@@ -295,7 +303,7 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
             
 #----------------------------------------------------------------------------------------
 
-@bot.tree.command(name="help", description="Lists all commands", guild=GUILD_ID)
+@bot.tree.command(name="help", description="Lists all commands")
 async def cmdHelp(interaction:discord.Interaction):
 
     if not interaction.guild is None:
@@ -317,7 +325,7 @@ async def cmdHelp(interaction:discord.Interaction):
 #----------------------------------------------------------------------------------------
 #Admin-only commands (except admin help) are not slash commands
 
-@bot.tree.command(name="adminhelp", description="Lists admin commands",  guild=GUILD_ID)
+@bot.tree.command(name="adminhelp", description="Lists admin commands")
 async def adminHelp(interaction:discord.Interaction):
 
     if interaction.guild is None:
@@ -451,8 +459,6 @@ async def on_command_error(ctx, error):
                 return
             
         await ctx.send(embed=utils.errorEmbed("Bad argument"))
-
-refreshAchInfo.start()
 
 bot.run(token)
 
