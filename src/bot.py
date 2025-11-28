@@ -59,7 +59,7 @@ async def refreshAchInfo():
 @app_commands.describe(steam_id="User steamID")
 async def linkSteamAccount(interaction: discord.Interaction, steam_id: str):
 
-    await interaction.response.defer()
+    await interaction.response.defer(ephemeral=True)
 
     if not interaction.guild is None:
 
@@ -111,7 +111,7 @@ async def unlinkSteamAccount(interaction: discord.Interaction):
 #----------------------------------------------------------------------------------------
 
 @bot.tree.command(name="achievements", description="Displays the achievements for a given role")
-@app_commands.describe(role_name="Full name of the TOS2 role")
+@app_commands.describe(role_name="Name/alias of the TOS2 role (e.g. retri/retributionist)")
 async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
 
     await interaction.response.defer()
@@ -128,15 +128,7 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
     with open(utils.achInfoPath, "r") as achInfo:
         achInfoDict = json.load(achInfo)
 
-    match roleName:
-        case "war":
-            roleName = "berserker"
-        case "pestilence":
-            roleName = "plaguebearer"
-        case "death":
-            roleName = "soulcollector"
-        case "famine":
-            roleName = "baker"
+    roleName = Tos2Info.aliasLookup.get(roleName, roleName)
         
     if not roleName in achInfoDict:
         await interaction.followup.send(embed=utils.errorEmbed("Failed to fetch achievements: couldnt find role."))
