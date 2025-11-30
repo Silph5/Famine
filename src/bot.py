@@ -401,6 +401,12 @@ async def sendPatch(ctx, *, message: str = None):
         await ctx.send("Dev only.")
         return
     
+    updEmbed = discord.Embed(title="New Famine Update")
+    updEmbed.add_field(name="patch notes: ", value=message)
+
+    #this url is to an image sent on my discord server, as discord needs to host the image for it to be used here.
+    updEmbed.set_thumbnail(url="https://cdn.discordapp.com/attachments/1439413871940210771/1444763824870789281/RoleIcon_Famine_Ability_ToS2.png?ex=692de4aa&is=692c932a&hm=8e790977b4fc56f2dd60c23fb2b1f60e40d6b4db83df4a8e9489e4fd3f8ce49a&")
+    
     for guild in bot.guilds:
 
         gSettings = utils.getGuildSettings(guild.id)
@@ -410,8 +416,9 @@ async def sendPatch(ctx, *, message: str = None):
             continue
 
         channel = bot.get_channel(int(patchChannel))
+
         try:
-            await channel.send(f"Famine update:\n{message}")
+            await channel.send(embed=updEmbed)
         except:
             print(f"failed to send patch to {guild.id}")
             
