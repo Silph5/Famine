@@ -295,7 +295,7 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
             
 #----------------------------------------------------------------------------------------
 
-@bot.tree.command(name="help", description="Lists all commands")
+@bot.tree.command(name="faminehelp", description="Lists all commands")
 async def cmdHelp(interaction:discord.Interaction):
 
     if not interaction.guild is None:
