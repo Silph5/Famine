@@ -31,6 +31,15 @@ def getGuildSettings(guildID):
             settingsDict = json.load(settings)
 
         return settingsDict
+    
+def hasNormalCommandPerm(interaction):
+    
+    if not interaction.guild is None:
+
+        if not (isValidChannel(interaction.guild.id, interaction.channel.id) or interaction.user.guild_permissions.administrator):
+            return False
+        
+    return True
 
 def isValidChannel(guildID, ctxChannelID):
     gSettings = getGuildSettings(guildID)

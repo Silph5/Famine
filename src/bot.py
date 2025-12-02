@@ -60,12 +60,10 @@ async def refreshAchInfo():
 async def linkSteamAccount(interaction: discord.Interaction, steam_id: str):
 
     await interaction.response.defer(ephemeral=True)
-
-    if not interaction.guild is None:
-
-        if not (utils.isValidChannel(interaction.guild.id, interaction.channel.id) or interaction.user.guild_permissions.administrator):
-            await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
-            return
+    
+    if not utils.hasNormalCommandPerm(interaction):
+        await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
+        return
 
     profileName, error = await asyncio.to_thread(utils.getSteamProfileNameAndValidate, steamKey, steam_id)
 
@@ -88,11 +86,9 @@ async def linkSteamAccount(interaction: discord.Interaction, steam_id: str):
 @bot.tree.command(name="unlink", description="Unlinks your steam account from the bot")
 async def unlinkSteamAccount(interaction: discord.Interaction):
 
-    if not interaction.guild is None:
-
-        if not (utils.isValidChannel(interaction.guild.id, interaction.channel.id) or interaction.user.guild_permissions.administrator):
-            await interaction.response.send_message(embed=utils.errorEmbed("Command cannot be used in this channel."))
-            return
+    if not utils.hasNormalCommandPerm(interaction):
+        await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
+        return
     
     with open(utils.steamLinkPath, "r") as steamLinks:
         links = json.load(steamLinks)
@@ -116,11 +112,9 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
 
     await interaction.response.defer()
 
-    if not interaction.guild is None:
-
-        if not (utils.isValidChannel(interaction.guild.id, interaction.channel.id) or interaction.user.guild_permissions.administrator):
-            await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
-            return
+    if not utils.hasNormalCommandPerm(interaction):
+        await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
+        return
 
     initialRoleName = role_name
     roleName = role_name.lower().replace(" ", "")
@@ -174,11 +168,9 @@ async def sendWinTotals(interaction:discord.Interaction):
 
     await interaction.response.defer()
 
-    if not interaction.guild is None:
-
-        if not (utils.isValidChannel(interaction.guild.id, interaction.channel.id) or interaction.user.guild_permissions.administrator):
-            await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
-            return
+    if not utils.hasNormalCommandPerm(interaction):
+        await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
+        return
 
     with open(utils.steamLinkPath, "r") as accLinks:
         steamLinksDict = json.load(accLinks)
@@ -239,11 +231,9 @@ async def sendWinTotals(interaction:discord.Interaction):
 async def nextUnobtainedAch(interaction:discord.Interaction):
     await interaction.response.defer()
 
-    if not interaction.guild is None:
-
-        if not (utils.isValidChannel(interaction.guild.id, interaction.channel.id) or interaction.user.guild_permissions.administrator):
-            await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
-            return
+    if not utils.hasNormalCommandPerm(interaction):
+        await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
+        return
 
     with open(utils.steamLinkPath, "r") as accLinks:
         steamLinksDict = json.load(accLinks)
@@ -298,11 +288,9 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
 @bot.tree.command(name="faminehelp", description="Lists all commands")
 async def cmdHelp(interaction:discord.Interaction):
 
-    if not interaction.guild is None:
-
-        if not (utils.isValidChannel(interaction.guild.id, interaction.channel.id) or interaction.user.guild_permissions.administrator):
-            await interaction.response.send_message(embed=utils.errorEmbed("Command cannot be used in this channel."), ephemeral=True)
-            return
+    if not utils.hasNormalCommandPerm(interaction):
+        await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
+        return
     
     helpEmbed = discord.Embed(title="Famine Help", description="-# Famine is an achievement tracking bot for Town Of Salem 2, allowing you to link your steam account and quickly access your progress on achievements for organised categories, such as per role.")
     
