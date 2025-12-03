@@ -61,7 +61,7 @@ async def linkSteamAccount(interaction: discord.Interaction, steam_id: str):
 
     await interaction.response.defer(ephemeral=True)
     
-    if not utils.hasNormalCommandPerm(interaction):
+    if not utils.hasNormalCommandPerm(interaction, bot.guilds):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
 
@@ -86,7 +86,7 @@ async def linkSteamAccount(interaction: discord.Interaction, steam_id: str):
 @bot.tree.command(name="unlink", description="Unlinks your steam account from the bot")
 async def unlinkSteamAccount(interaction: discord.Interaction):
 
-    if not utils.hasNormalCommandPerm(interaction):
+    if not utils.hasNormalCommandPerm(interaction, bot.guilds):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
     
@@ -112,7 +112,7 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
 
     await interaction.response.defer()
 
-    if not utils.hasNormalCommandPerm(interaction):
+    if not utils.hasNormalCommandPerm(interaction, bot.guilds):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
 
@@ -168,7 +168,7 @@ async def sendWinTotals(interaction:discord.Interaction):
 
     await interaction.response.defer()
 
-    if not utils.hasNormalCommandPerm(interaction):
+    if not utils.hasNormalCommandPerm(interaction, bot.guilds):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
 
@@ -231,7 +231,7 @@ async def sendWinTotals(interaction:discord.Interaction):
 async def nextUnobtainedAch(interaction:discord.Interaction):
     await interaction.response.defer()
 
-    if not utils.hasNormalCommandPerm(interaction):
+    if not utils.hasNormalCommandPerm(interaction, bot.guilds):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
 
@@ -288,7 +288,7 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
 @bot.tree.command(name="faminehelp", description="Lists all commands")
 async def cmdHelp(interaction:discord.Interaction):
 
-    if not utils.hasNormalCommandPerm(interaction):
+    if not utils.hasNormalCommandPerm(interaction, bot.guilds):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
     

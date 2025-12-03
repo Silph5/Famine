@@ -32,14 +32,18 @@ def getGuildSettings(guildID):
 
         return settingsDict
     
-def hasNormalCommandPerm(interaction):
-    
-    if not interaction.guild is None:
+def hasNormalCommandPerm(interaction, guilds):
 
-        if not (isValidChannel(interaction.guild.id, interaction.channel.id) or interaction.user.guild_permissions.administrator):
-            return False
+    if not interaction.guild in guilds:
+        return True
+    
+    if interaction.guild is None:
+        return True
+
+    if (isValidChannel(interaction.guild.id, interaction.channel.id) or interaction.user.guild_permissions.administrator):
+        return True
         
-    return True
+    return False
 
 def isValidChannel(guildID, ctxChannelID):
     gSettings = getGuildSettings(guildID)
