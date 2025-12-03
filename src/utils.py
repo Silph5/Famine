@@ -102,26 +102,7 @@ def getAchievementRoleAndCategory(achName):
         achCategory = "generalAchievements"
         roleName = wordsArray[0].lower()
     
-    match roleName:
-        case "mayore": 
-            roleName = "mayor"
-            #typo in steam api
-        case "tavern":
-            roleName = "tavernkeeper"
-        case "coven":
-            roleName = "covenleader"
-        case "hex":
-            roleName = "hexmaster"
-        case "potion":
-            roleName = "potionmaster"
-        case "voodoo":
-            roleName = "voodoomaster"
-        case "soul":
-            roleName = "soulcollector"
-        case "cursed":
-            roleName = "cursedsoul"
-        case "serial":
-            roleName = "serialkiller"
+    roleName = Tos2Info.aliasLookup.get(roleName, roleName)
     
     if not roleName in Tos2Info.roleInfo:
         roleName = "misc"
