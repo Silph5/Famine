@@ -9,16 +9,16 @@ https://github.com/Silph5/Famine-docs-legal
 ### /faminehelp
 /faminehelp is Famine's /help command equivalent, and will produce an embed with a description of every command available to the bot.
 ### /linksteam
-/linksteam is the command used to link steam accounts to discord accounts in the Famine's internal database. This is necessary to allow the bot to track specific achievement coompletions via HTTP requests to the Steam Web API. 
+/linksteam is the command used to link steam accounts to discord accounts in the Famine's internal database. This is necessary to allow the bot to track specific achievement completions via HTTP requests to the Steam Web API. 
 It takes one argument, being the steamID of the user's Steam account, and will ephemerally notify the user with the username of the account they just linked to help ensure they are linked to the correct account.
 
 Usage example: `/linksteam 12345678912345678`
 ### /unlink
-/unlink simply deletes the user's Discord and Steam account link from the bot's database, and any other user-specific data that may be kept.
+/unlink simply deletes the user's Discord and Steam account link from the bot's database, alongside any other user-specific data that may be kept.
 
 ### /achievements
-/achievements produces all (non-win related) achievements for a given Town of Salem 2 role. The information the bot can give about an achievement is the achievement's name, description, secrecy, and globally achievement percentage. 
-If the user of the command has their steam account linked, the bot will also attempt to access their achievement completions from the Steam Web API when this command is used, and will show which of the shown achievements have been completed.
+/achievements produces all (non-win related) achievements for a given Town of Salem 2 role. This includes the achievement's name, description, secrecy, and global achievement completion percentage. 
+If the user of the command has their steam account linked, the bot will also attempt to access their achievement completions from the Steam Web API when this command is used, and will show which of the achievements have been completed.
 The command takes one argument, being the name of the role. It also accepts commonly used role aliases such as _CS_ instead of _cursed soul_.
 
 Usage example: `/achievements admirer`
