@@ -51,3 +51,45 @@ Usage example: `f!setUpdatesChannel 1433446281514188872`
 ### f!deleteGuildSettings
 Deletes the guild settings file for the guild. On the user end, this will effectively reset all per-guild bot settings to their defaults for the guild the command is used in.
 Any other interaction with the bot will immediately produce a new settings file, so if you wish to wipe the guild from the bots data when removing it from a guild, you must ensure that this is the last command used.
+
+## Storage of Achievement Info
+
+achInfo.json is a (gitignored) json file in the data dir which the bot populates with information from the Steam Web API every 48 hours while it is online. This is the structure from which commands such as /nextUnobtained and /achievements pull non-user-specific achievement information such as the achievements' name, description and global percentages.
+
+This information is pulled from the following Steam Web API endpoints:
+ - https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=XXXXXXXXXXXXX&appid=2140510
+ - http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid=2140510&format=json
+
+In the achInfo json populated by the 48 hour looping task, the collected data for each role is stored like this:
+
+```json
+{
+    "roleName": {
+        "winAchievements": [
+            {
+                "apiIndex": 2,
+                "apiName": "WinXGamesAsThisRole",
+                "displayName": "Achievement name",
+                "description": "Win X games as This Role",
+                "isSecret": 0,
+                "percent": "20.1",
+                "icon": "(URL to ach icon on steam)"
+            }
+        ],
+        "generalAchievements": [
+            {
+                "apiIndex": 9,
+                "apiName": "ThisRoleDoThisThing",
+                "displayName": "Achievement name",
+                "description": "Do this thing as This Role",
+                "isSecret": 0,
+                "percent": "5.3",
+                "icon": "(URL to ach icon on steam)"
+            }
+        ]
+    }
+}
+```
+
+This structuring is designed to make accessing specific types of achievements as quick as possible in the context of the Famine's usecases.
+
