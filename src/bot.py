@@ -40,18 +40,18 @@ async def on_ready():
 
     if GUILD_ID is None:
         synced = await bot.tree.sync()
-        print(f"Globally synced {len(synced)} commands")
+        print(f"Famine: Globally synced {len(synced)} commands")
     
     else:
         synced = await bot.tree.sync(guild=GUILD_ID)
-        print(f"Guild synced {len(synced)} commands")
+        print(f"Famine: Guild synced {len(synced)} commands")
 
 @tasks.loop(hours=48)
 async def refreshAchInfo():
     await bot.wait_until_ready()
 
     utils.updateAchInfoJson(steamKey=steamKey)
-    print("refreshed ach info")
+    print("Famine: refreshed ach info")
 
 #----------------------------------------------------------------------------------------
 
@@ -408,7 +408,7 @@ async def sendPatch(ctx, *, message: str = None):
         try:
             await channel.send(embed=updEmbed)
         except:
-            print(f"failed to send patch to {guild.id}")
+            print(f"Famine: failed to send patch to {guild.id}")
             
 
 
@@ -446,6 +446,9 @@ async def on_command_error(ctx, error):
                 return
             
         await ctx.send(embed=utils.errorEmbed("Bad argument"))
+    else:
+        await ctx.send(embed=utils.errorEmbed(f"Unexpected error: {type(error)}"))
+        print(f"Famine: Unexpected error occured of type {type(error)} in guild {ctx.guild.id}")
 
 bot.run(token)
 
