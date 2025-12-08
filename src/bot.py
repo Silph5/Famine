@@ -134,8 +134,9 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
     accountLinked = False
     if str(interaction.user.id) in steamLinksDict:
         accountLinked = True
-        authorAchStats = requests.get("https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/", params={"key":steamKey, "appid":"2140510", "steamid":steamLinksDict[str(interaction.user.id)]}).json()
-    
+        response = await asyncio.to_thread(requests.get, "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/", params={"key":steamKey, "appid":"2140510", "steamid":steamLinksDict[str(interaction.user.id)]})
+        authorAchStats = response.json()
+
     authorStatsReachable = True
     if accountLinked and ("error" in authorAchStats["playerstats"]):
         authorStatsReachable = False
@@ -179,7 +180,8 @@ async def sendWinTotals(interaction:discord.Interaction):
         await interaction.followup.send(embed=utils.errorEmbed("This command requires a linked steam account. Use /linksteam [steamID] to link your steam account."))
         return
 
-    userAchStats = requests.get("https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/", params={"key":steamKey, "appid":"2140510", "steamid":steamLinksDict[str(interaction.user.id)]}).json()
+    response = await asyncio.to_thread(requests.get, "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/", params={"key":steamKey, "appid":"2140510", "steamid":steamLinksDict[str(interaction.user.id)]})
+    userAchStats = response.json()
 
     if "error" in userAchStats["playerstats"]:
         await interaction.followup.send(embed=utils.errorEmbed(f"Failed to access achievement completions: {userAchStats["playerstats"]["error"]}"))
@@ -242,13 +244,15 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
         await interaction.followup.send(embed=utils.errorEmbed("This command requires a linked steam account. Use /linksteam [steamID] to link your steam account."))
         return
     
-    userAchStats = requests.get("https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/", params={"key":steamKey, "appid":"2140510", "steamid":steamLinksDict[str(interaction.user.id)]}).json()
+    response = await asyncio.to_thread(requests.get, "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/", params={"key":steamKey, "appid":"2140510", "steamid":steamLinksDict[str(interaction.user.id)]})
+    userAchStats = response.json()
 
     if "error" in userAchStats["playerstats"]:
         await interaction.followup.send(embed=utils.errorEmbed(f"Failed to access achievement completions: {userAchStats["playerstats"]["error"]}"))
         return
     
-    orderedAchs = requests.get("https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/", params={"gameid":"2140510", "format":"json"}).json()
+    response = await asyncio.to_thread(requests.get, "https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/", params={"gameid":"2140510", "format":"json"})
+    orderedAchs = response.json()
 
     if not "achievementpercentages" in orderedAchs:
         await interaction.followup.send(embed=utils.errorEmbed(f"Failed to access global achievement percentages."))
