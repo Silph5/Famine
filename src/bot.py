@@ -3,9 +3,9 @@
 import discord
 import os
 import json
-import requests
 import asyncio
 import aiohttp
+import aiofiles
 
 import Tos2Info
 import utils
@@ -51,7 +51,7 @@ async def on_ready():
 async def refreshAchInfo():
     await bot.wait_until_ready()
 
-    utils.updateAchInfoJson(steamKey=steamKey)
+    await asyncio.to_thread(utils.updateAchInfoJson, steamKey)
     print("Famine: refreshed ach info")
 
 #----------------------------------------------------------------------------------------
@@ -72,13 +72,14 @@ async def linkSteamAccount(interaction: discord.Interaction, steam_id: str):
         await interaction.followup.send(embed=utils.errorEmbed(errorStr=f"{error}\n\n _If you are unsure how to get your steamID, use /help for more info._"))
         return
     
-    with open(utils.steamLinkPath, "r") as steamLinks:
-        links = json.load(steamLinks)
+    async with aiofiles.open(utils.steamLinkPath, "r") as f:
+        data = await f.read()
+        links = json.loads(data)
     
     links[str(interaction.user.id)] = steam_id
 
-    with open(utils.steamLinkPath, "w") as steamLinks:
-        json.dump(links, steamLinks, indent=4)
+    async with aiofiles.open(utils.steamLinkPath, "w") as f:
+        await f.write(json.dumps(links, indent=4))
 
     await interaction.followup.send(f"Linked to steam account \"{profileName}\". \n\nIf this is not your steam account, use /unlink or /link again with the correct steamID", ephemeral=True)
 
@@ -91,8 +92,9 @@ async def unlinkSteamAccount(interaction: discord.Interaction):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
     
-    with open(utils.steamLinkPath, "r") as steamLinks:
-        links = json.load(steamLinks)
+    async with aiofiles.open(utils.steamLinkPath, "r") as f:
+        data = await f.read()
+        links = json.loads(data)
 
     if str(interaction.user.id) not in links:
         await interaction.response.send_message(embed=utils.errorEmbed("Failed to unlink: no linked steam account"))
@@ -100,8 +102,8 @@ async def unlinkSteamAccount(interaction: discord.Interaction):
     
     del links[str(interaction.user.id)]
 
-    with open(utils.steamLinkPath, "w") as steamLinks:
-        links = json.dump(links, steamLinks, indent=4)
+    async with aiofiles.open(utils.steamLinkPath, "w") as f:
+        await f.write(json.dumps(links, indent=4))
 
     await interaction.response.send_message("Successfully unlinked account.")
 
@@ -120,8 +122,9 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
     initialRoleName = role_name
     roleName = role_name.lower().replace(" ", "")
     
-    with open(utils.achInfoPath, "r") as achInfo:
-        achInfoDict = json.load(achInfo)
+    async with aiofiles.open(utils.achInfoPath, "r") as f:
+        data = await f.read()
+        achInfoDict = json.loads(data)
 
     roleName = Tos2Info.aliasLookup.get(roleName, roleName)
         
@@ -129,8 +132,9 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
         await interaction.followup.send(embed=utils.errorEmbed("Failed to fetch achievements: couldnt find role."))
         return
     
-    with open(utils.steamLinkPath, "r") as accLinks:
-        steamLinksDict = json.load(accLinks)
+    async with aiofiles.open(utils.steamLinkPath, "r") as f:
+        data = await f.read()
+        steamLinksDict = json.loads(data)
     
     accountLinked = False
     if str(interaction.user.id) in steamLinksDict:
@@ -176,8 +180,9 @@ async def sendWinTotals(interaction:discord.Interaction):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
 
-    with open(utils.steamLinkPath, "r") as accLinks:
-        steamLinksDict = json.load(accLinks)
+    async with aiofiles.open(utils.steamLinkPath, "r") as f:
+        data = await f.read()
+        steamLinksDict = json.loads(data)
 
     if not str(interaction.user.id) in steamLinksDict:
         await interaction.followup.send(embed=utils.errorEmbed("This command requires a linked steam account. Use /linksteam [steamID] to link your steam account."))
@@ -191,8 +196,9 @@ async def sendWinTotals(interaction:discord.Interaction):
         await interaction.followup.send(embed=utils.errorEmbed(f"Failed to access achievement completions: {userAchStats["playerstats"]["error"]}"))
         return
 
-    with open(utils.achInfoPath, "r") as achInfo:
-        achInfoDict = json.load(achInfo)
+    async with aiofiles.open(utils.achInfoPath, "r") as f:
+        data = await f.read()
+        achInfoDict = json.loads(data)
 
     townStr = ""
     covStr = ""
@@ -241,8 +247,9 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
 
-    with open(utils.steamLinkPath, "r") as accLinks:
-        steamLinksDict = json.load(accLinks)
+    async with aiofiles.open(utils.steamLinkPath, "r") as f:
+        data = await f.read()
+        steamLinksDict = json.loads(data)
 
     if str(interaction.user.id) not in steamLinksDict:
         await interaction.followup.send(embed=utils.errorEmbed("This command requires a linked steam account. Use /linksteam [steamID] to link your steam account."))
@@ -264,8 +271,9 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
         await interaction.followup.send(embed=utils.errorEmbed("Failed to access global achievement percentages."))
         return
 
-    with open(utils.achInfoPath, "r") as achInfoJson:
-        achInfoDict = json.load(achInfoJson)
+    async with aiofiles.open(utils.achInfoPath, "r") as f:
+        data = await f.read()
+        achInfoDict = json.loads(data)
     
     for ach in orderedAchs["achievementpercentages"]["achievements"]:
 
