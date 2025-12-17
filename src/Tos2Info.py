@@ -193,6 +193,23 @@ roleInfo = {
     }
 }
 
+factionIDs = {
+    "town": 1, 
+    "coven": 2, 
+    "serialkiller": 3, 
+    "arsonist": 4, 
+    "werewolf": 5, 
+    "shroud": 6, 
+    "apocalypse": 7, 
+    "executioner": 8, 
+    "jester": 9, 
+    "pirate": 10, 
+    "doomsayer": 11, 
+    "vampire": 12, 
+    "cursedsoul": 13,
+}
+
+
 def getRoleColour(roleName):
     try:
         match roleInfo[roleName]["alignment"][0]:

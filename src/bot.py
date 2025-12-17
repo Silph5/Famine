@@ -14,6 +14,8 @@ from discord.ext import commands
 from discord.ext import tasks
 from discord import app_commands
 
+from typing import Literal
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -303,11 +305,50 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
             
 #----------------------------------------------------------------------------------------
 
+@bot.tree.command(name="getrolefactioncode", description="Automatically generates a role-faction code which can be copy-pasted directly into ToS2 chat")
+async def genRoleFactionCode(interaction:discord.Interaction, role_name:str, 
+                             faction_name:Literal["Town", "Coven", "Serial killer", "Arsonist", "Werewolf", "Shroud", "Apocalypse", "Executioner", "Jester", "Pirate", "Doomsayer", "Vampire", "Cursed Soul"]):
+    #TODO: find a better way to do that crap
+
+    if not utils.hasNormalCommandPerm(interaction, bot.guilds):
+        await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
+        return
+        
+    factionName = faction_name.lower().replace(" ", "")
+    
+    roleName = role_name.lower().replace(" ", "")
+    roleName = Tos2Info.aliasLookup.get(roleName, roleName)
+    print(roleName)
+    
+    async with aiofiles.open(utils.achInfoPath, "r") as f:
+        data = await f.read()
+        achInfoDict = json.loads(data)
+
+    rID, fID = -1, -1
+
+    for num, key in enumerate(achInfoDict):
+        if key == roleName:
+            rID = num
+            break
+    if rID == -1:
+        await interaction.response.send_message(utils.errorEmbed(errorStr="Couldn't find role."))
+
+    fID = Tos2Info.factionIDs[factionName]
+    
+    cEmbed = discord.Embed(title=f"Code for {faction_name} aligned {roleName}:", description=f"[[#{rID},{fID}]]")
+
+    await interaction.response.send_message(embed=cEmbed)
+
+    #this entire command is really poorly implemented, honestly. It's fine for now.
+    #not sure basing the rIDs off the steam API is a good idea. May hardcode them into Tos2Info in the future
+    
+#----------------------------------------------------------------------------------------
+
 @bot.tree.command(name="faminehelp", description="Lists all commands")
 async def cmdHelp(interaction:discord.Interaction):
 
     if not utils.hasNormalCommandPerm(interaction, bot.guilds):
-        await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
+        await interaction.response.send_message(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
     
     helpEmbed = discord.Embed(title="Famine Help", description="-# Famine is an achievement tracking bot for Town Of Salem 2, allowing you to link your steam account and quickly access your progress on achievements for organised categories, such as per role.")
@@ -317,6 +358,7 @@ async def cmdHelp(interaction:discord.Interaction):
     helpEmbed.add_field(name="/achievements", value="Shows all the achievements of a specific role (and which ones you have completed if your steam account is linked)\n\n-# Usage example: `/achievements Admirer`", inline=False)
     helpEmbed.add_field(name="/winstats", value="Shows your highest win achievement in every role, alongside a minimum estimate of your total wins. Requires a linked account.\n\n-# Usage example: `/winstats`", inline=False)
     helpEmbed.add_field(name="/nextunobtained", value="Shows the next most common achievement that you have not completed. Requires a linked account.\n\n-# Usage example: `/nextunobtained`", inline=False)
+    helpEmbed.add_field(name="/getrolefactioncode", value="Shows the next most common achievement that you have not completed. Requires a linked account.\n\n-# Usage example: `/getrolefactioncode cs Town`", inline=False)
 
 
     await interaction.response.send_message(embed=helpEmbed)
