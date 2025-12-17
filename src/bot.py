@@ -294,7 +294,7 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
             aEmbed.set_thumbnail(url=achInfo["icon"])
 
             if achInfo["isSecret"]:
-                aEmbed.add_field(name=(f"||{achInfo["displayName"]}||"), value=f"||Hidden achievement...||\n-# `{achInfo["percent"]}% of players unlocked`", inline=False)
+                aEmbed.add_field(name=(f"||{achInfo["displayName"]}||"), value=f"Hidden achievement...\n-# `{achInfo["percent"]}% of players unlocked`", inline=False)
             else:
                 aEmbed.add_field(name=(f"{achInfo["displayName"]}"), value=f"{achInfo["description"]}\n-# `{achInfo["percent"]}% of players unlocked`",inline=False)
 
@@ -318,7 +318,7 @@ async def genRoleFactionCode(interaction:discord.Interaction, role_name:str,
     
     roleName = role_name.lower().replace(" ", "")
     roleName = Tos2Info.aliasLookup.get(roleName, roleName)
-    print(roleName)
+    #print(roleName)
     
     async with aiofiles.open(utils.achInfoPath, "r") as f:
         data = await f.read()
