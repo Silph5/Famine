@@ -324,14 +324,8 @@ async def genRoleFactionCode(interaction:discord.Interaction, role_name:str,
         data = await f.read()
         achInfoDict = json.loads(data)
 
-    rID, fID = -1, -1
 
-    for num, key in enumerate(achInfoDict):
-        if key == roleName:
-            rID = num
-            break
-    if rID == -1:
-        await interaction.response.send_message(utils.errorEmbed(errorStr="Couldn't find role."))
+    rID = Tos2Info.roleInfo[roleName]["id"]
 
     fID = Tos2Info.factionIDs[factionName]
     

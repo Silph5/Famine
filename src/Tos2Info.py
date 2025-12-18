@@ -3,193 +3,251 @@
 #also includes some getters to reduce the amount of redundant data
 
 roleInfo = {
-    "admirer":{
-        "alignment":["Town", "Support"],
+    "admirer": {
+        "alignment": ["Town", "Support"],
+        "id": 1
     },
     "amnesiac": {
-        "alignment": ["Town", "Support"]
+        "alignment": ["Town", "Support"],
+        "id": 2
     },
     "bodyguard": {
-        "alignment": ["Town", "Protective"]
+        "alignment": ["Town", "Protective"],
+        "id": 3
     },
     "cleric": {
-        "alignment": ["Town", "Protective"]
+        "alignment": ["Town", "Protective"],
+        "id": 4
     },
     "catalyst": {
-        "alignment": ["Town", "Outlier"]
+        "alignment": ["Town", "Outlier"],
+        "id": 59
     },
     "coroner": {
-        "alignment": ["Town", "Investigative"]
+        "alignment": ["Town", "Investigative"],
+        "id": 5
     },
     "crusader": {
-        "alignment": ["Town", "Protective"]
+        "alignment": ["Town", "Protective"],
+        "id": 6
     },
     "deputy": {
-        "alignment": ["Town", "Killing"]
+        "alignment": ["Town", "Killing"],
+        "id": 7
     },
     "investigator": {
-        "alignment": ["Town", "Investigative"]
+        "alignment": ["Town", "Investigative"],
+        "id": 8
     },
     "jailor": {
-        "alignment": ["Town", "Power"]
+        "alignment": ["Town", "Power"],
+        "id": 9
     },
     "lookout": {
-        "alignment": ["Town", "Investigative"]
+        "alignment": ["Town", "Investigative"],
+        "id": 10
     },
     "marshal": {
-        "alignment": ["Town", "Power"]
+        "alignment": ["Town", "Power"],
+        "id": 55
     },
     "mayor": {
-        "alignment": ["Town", "Power"]
+        "alignment": ["Town", "Power"],
+        "id": 11
     },
     "monarch": {
-        "alignment": ["Town", "Power"]
+        "alignment": ["Town", "Power"],
+        "id": 12
     },
     "oracle": {
-        "alignment": ["Town", "Protective"]
+        "alignment": ["Town", "Protective"],
+        "id": 56
     },
     "prosecutor": {
-        "alignment": ["Town", "Power"]
+        "alignment": ["Town", "Power"],
+        "id": 13
     },
     "psychic": {
-        "alignment": ["Town", "Investigative"]
+        "alignment": ["Town", "Investigative"],
+        "id": 14
     },
     "retributionist": {
-        "alignment": ["Town", "Support"]
+        "alignment": ["Town", "Support"],
+        "id": 15
     },
     "seer": {
-        "alignment": ["Town", "Investigative"]
+        "alignment": ["Town", "Investigative"],
+        "id": 16
     },
     "sheriff": {
-        "alignment": ["Town", "Investigative"]
+        "alignment": ["Town", "Investigative"],
+        "id": 17
     },
     "socialite": {
-        "alignment": ["Town", "Support"]
+        "alignment": ["Town", "Support"],
+        "id": 54
     },
     "spy": {
-        "alignment": ["Town", "Investigative"]
+        "alignment": ["Town", "Investigative"],
+        "id": 18
     },
     "tavernkeeper": {
-        "alignment": ["Town", "Support"]
+        "alignment": ["Town", "Support"],
+        "id": 19
     },
     "tracker": {
-        "alignment": ["Town", "Investigative"]
+        "alignment": ["Town", "Investigative"],
+        "id": 20
     },
     "trapper": {
-        "alignment": ["Town", "Protective"]
+        "alignment": ["Town", "Protective"],
+        "id": 21
     },
     "trickster": {
-        "alignment": ["Town", "Killing"]
+        "alignment": ["Town", "Killing"],
+        "id": 22
     },
     "veteran": {
-        "alignment": ["Town", "Killing"]
+        "alignment": ["Town", "Killing"],
+        "id": 23
     },
     "vigilante": {
-        "alignment": ["Town", "Killing"]
+        "alignment": ["Town", "Killing"],
+        "id": 24
     },
     "conjurer": {
-        "alignment": ["Coven", "Killing"]
+        "alignment": ["Coven", "Killing"],
+        "id": 25
     },
     "covenleader": {
-        "alignment": ["Coven", "Power"]
+        "alignment": ["Coven", "Power"],
+        "id": 26
     },
     "cultist": {
-        "alignment": ["Coven", "Outlier"]
+        "alignment": ["Coven", "Outlier"],
+        "id": 60
     },
     "dreamweaver": {
-        "alignment": ["Coven", "Deception"]
+        "alignment": ["Coven", "Deception"],
+        "id": 27
     },
     "enchanter": {
-        "alignment": ["Coven", "Utility"]
+        "alignment": ["Coven", "Utility"],
+        "id": 28
     },
     "hexmaster": {
-        "alignment": ["Coven", "Power"]
+        "alignment": ["Coven", "Power"],
+        "id": 29
     },
     "illusionist": {
-        "alignment": ["Coven", "Deception"]
+        "alignment": ["Coven", "Deception"],
+        "id": 30
     },
     "jinx": {
-        "alignment": ["Coven", "Killing"]
+        "alignment": ["Coven", "Killing"],
+        "id": 31
     },
     "medusa": {
-        "alignment": ["Coven", "Deception"]
+        "alignment": ["Coven", "Deception"],
+        "id": 32
     },
     "necromancer": {
-        "alignment": ["Coven", "Utility"]
+        "alignment": ["Coven", "Utility"],
+        "id": 33
     },
     "poisoner": {
-        "alignment": ["Coven", "Utility"]
+        "alignment": ["Coven", "Utility"],
+        "id": 34
     },
     "potionmaster": {
-        "alignment": ["Coven", "Utility"]
+        "alignment": ["Coven", "Utility"],
+        "id": 35
     },
     "ritualist": {
-        "alignment": ["Coven", "Killing"]
+        "alignment": ["Coven", "Killing"],
+        "id": 36
     },
     "voodoomaster": {
-        "alignment": ["Coven", "Utility"]
+        "alignment": ["Coven", "Utility"],
+        "id": 37
     },
     "wildling": {
-        "alignment": ["Coven", "Utility"]
+        "alignment": ["Coven", "Utility"],
+        "id": 38
     },
     "witch": {
-        "alignment": ["Coven", "Power"]
+        "alignment": ["Coven", "Power"],
+        "id": 39
     },
     "arsonist": {
         "alignment": ["Neutral", "Killing"],
-        "colour": "0xDB7601"
+        "colour": "0xDB7601",
+        "id": 40
     },
     "baker": {
         "alignment": ["Neutral", "Apocalypse"],
-        "colour": "0xFE014E"
+        "colour": "0xFE014E",
+        "id": 41
     },
     "berserker": {
         "alignment": ["Neutral", "Apocalypse"],
-        "colour": "0xFE014E"
+        "colour": "0xFE014E",
+        "id": 42
     },
     "cursedsoul": {
         "alignment": ["Neutral", "Outlier"],
-        "colour": "0xf5a563"
+        "colour": "0xf5a563",
+        "id": 53
     },
     "doomsayer": {
         "alignment": ["Neutral", "Evil"],
-        "colour": "0x00CC99"
+        "colour": "0x00CC99",
+        "id": 43
     },
     "executioner": {
         "alignment": ["Neutral", "Evil"],
-        "colour": "0x949797"
+        "colour": "0x949797",
+        "id": 44
     },
     "jester": {
         "alignment": ["Neutral", "Evil"],
-        "colour": "0xF5A6D4"
+        "colour": "0xF5A6D4",
+        "id": 45
     },
     "pirate": {
         "alignment": ["Neutral", "Evil"],
-        "colour": "0xECC23E"
+        "colour": "0xECC23E",
+        "id": 46
     },
     "plaguebearer": {
         "alignment": ["Neutral", "Apocalypse"],
-        "colour": "0xFE014E"
+        "colour": "0xFE014E",
+        "id": 47
     },
     "serialkiller": {
         "alignment": ["Neutral", "Killing"],
-        "colour": "0x1D4DFC"
+        "colour": "0x1D4DFC",
+        "id": 48
     },
     "shroud": {
         "alignment": ["Neutral", "Killing"],
-        "colour": "0x6699FF"
+        "colour": "0x6699FF",
+        "id": 49
     },
     "soulcollector": {
         "alignment": ["Neutral", "Apocalypse"],
-        "colour": "0xFE014E"
+        "colour": "0xFE014E",
+        "id": 50
     },
     "werewolf": {
         "alignment": ["Neutral", "Killing"],
-        "colour": "0x9D7038"
+        "colour": "0x9D7038",
+        "id": 51
     },
     "vampire": {
         "alignment": ["Neutral", "Outlier"],
-        "colour": "0xd90707"
+        "colour": "0xd90707",   
+        "id": 52
     }
 }
 
