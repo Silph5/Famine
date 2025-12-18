@@ -319,11 +319,6 @@ async def genRoleFactionCode(interaction:discord.Interaction, role_name:str,
     roleName = role_name.lower().replace(" ", "")
     roleName = Tos2Info.aliasLookup.get(roleName, roleName)
     #print(roleName)
-    
-    async with aiofiles.open(utils.achInfoPath, "r") as f:
-        data = await f.read()
-        achInfoDict = json.loads(data)
-
 
     rID = Tos2Info.roleInfo[roleName]["id"]
 
