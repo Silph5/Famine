@@ -228,6 +228,8 @@ async def sendWinTotals(interaction:discord.Interaction):
                 covStr += f"\n{role}: {roleWins}"
             case "Neutral":
                 neutStr += f"\n{role}: {roleWins}"
+    
+    avgWins = round(totalWins / len(Tos2Info.roleInfo), 2)
 
     statsEmbed = discord.Embed(title="Win statistics (highest win achievements unlocked):", colour=0xd4af37)
     
@@ -235,6 +237,7 @@ async def sendWinTotals(interaction:discord.Interaction):
     statsEmbed.add_field(name="Coven Roles", value=covStr, inline=True)
     statsEmbed.add_field(name="Neutral Roles", value=neutStr, inline=True)
     statsEmbed.add_field(name="Total Wins:", value=f"***{totalWins}+***", inline=False)
+    statsEmbed.add_field(name="Avg per role:", value=f"***{avgWins}+***", inline=True)
         
     await interaction.followup.send(embed=statsEmbed)
 
