@@ -323,6 +323,10 @@ async def genRoleFactionCode(interaction:discord.Interaction, role_name:str,
     roleName = Tos2Info.aliasLookup.get(roleName, roleName)
     #print(roleName)
 
+    if not roleName in Tos2Info.roleInfo:
+        await interaction.followup.send(embed=utils.errorEmbed("Given role name is invalid."))
+        return
+
     rID = Tos2Info.roleInfo[roleName]["id"]
 
     fID = Tos2Info.factionIDs[factionName]
