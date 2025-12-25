@@ -196,7 +196,7 @@ roleInfo = {
     },
     "cursedsoul": {
         "alignment": ["Neutral", "Outlier"],
-        "colour": "0xf5a563",
+        "colour": "0xF5A563",
         "id": 53
     },
     "doomsayer": {
@@ -280,6 +280,16 @@ def getRoleColour(roleName):
     except: 
         return int("0xFFD700", 16)
     
+def getFactionColour(factionName):
+    
+    match factionName:
+        case "town":
+            return int("0x66BF58", 16)
+        case "coven":
+            return int("0xA331EF", 16)
+        case _:
+            return int(roleInfo[factionName]["colour"], 16)
+
 roleAliases = {
     ("adm", "admi"): "admirer",
     ("amne",): "amnesiac",
