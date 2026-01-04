@@ -354,7 +354,7 @@ async def cmdHelp(interaction:discord.Interaction):
     helpEmbed.add_field(name="/achievements", value="Shows all the achievements of a specific role (and which ones you have completed if your steam account is linked)\n\n-# Usage example: `/achievements Admirer`", inline=False)
     helpEmbed.add_field(name="/winstats", value="Shows your highest win achievement in every role, alongside a minimum estimate of your total wins. Requires a linked account.\n\n-# Usage example: `/winstats`", inline=False)
     helpEmbed.add_field(name="/nextunobtained", value="Shows the next most common achievement that you have not completed. Requires a linked account.\n\n-# Usage example: `/nextunobtained`", inline=False)
-    helpEmbed.add_field(name="/getrolefactioncode", value="Shows the next most common achievement that you have not completed. Requires a linked account.\n\n-# Usage example: `/getrolefactioncode cs Town`", inline=False)
+    helpEmbed.add_field(name="/getrolefactioncode", value="Gives a code that can you typed or pasted into game chat which produces a role mention of a given role as being aligned with a given faction. For example, a coven-aligned executioner \n\n-# Usage example: `/getrolefactioncode cs Town`", inline=False)
 
 
     await interaction.response.send_message(embed=helpEmbed)
