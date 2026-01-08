@@ -159,7 +159,7 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
             endStr = await asyncio.to_thread(utils.getAchCompletionStr, authorAchStats, ach["apiIndex"])
 
         if ach["isSecret"]:
-            aEmbed.add_field(name=(f"||{ach["displayName"]}|| {endStr}"), value=f"||Hidden achievement...||\n-# `{ach["percent"]}% of players unlocked`", inline=False)
+            aEmbed.add_field(name=(f"||{ach["displayName"]}|| {endStr}"), value=f"Hidden achievement...\n-# `{ach["percent"]}% of players unlocked`", inline=False)
         else:
             aEmbed.add_field(name=(f"{ach["displayName"]} {endStr}"), value=f"{ach["description"]}\n-# `{ach["percent"]}% of players unlocked`",inline=False)
 
@@ -279,8 +279,11 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
     async with aiofiles.open(utils.achInfoPath, "r") as f:
         data = await f.read()
         achInfoDict = json.loads(data)
+
+    findingNext2 = False
     
     for ach in orderedAchs["achievementpercentages"]["achievements"]:
+
 
         roleName, achCategory = utils.getAchievementRoleAndCategory(ach["name"])
 
@@ -292,19 +295,32 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
             achInfo = achFromDict
 
         if not userAchStats["playerstats"]["achievements"][completionJsonIndex]["achieved"]:
+
+            if not findingNext2:
             
-            aEmbed = discord.Embed(title="Next Unobtained Achievement", color=Tos2Info.getRoleColour(roleName))
-            aEmbed.set_thumbnail(url=achInfo["icon"])
+                aEmbed = discord.Embed(title="Next Unobtained Achievement", color=Tos2Info.getRoleColour(roleName))
+                aEmbed.set_thumbnail(url=achInfo["icon"])
+
+                if achInfo["isSecret"]:
+                    aEmbed.add_field(name=(f"||{achInfo["displayName"]}||"), value=f"Hidden achievement...\n-# `{achInfo["percent"]}% of players unlocked`", inline=False)
+                else:
+                    aEmbed.add_field(name=(f"{achInfo["displayName"]}"), value=f"{achInfo["description"]}\n-# `{achInfo["percent"]}% of players unlocked`",inline=False)
+
+                findingNext2 = True
+                continue
 
             if achInfo["isSecret"]:
-                aEmbed.add_field(name=(f"||{achInfo["displayName"]}||"), value=f"Hidden achievement...\n-# `{achInfo["percent"]}% of players unlocked`", inline=False)
+                aEmbed.add_field(name=(f""), value=f"\n\n_Next: \"{achInfo["displayName"]}\"_", inline=False)
             else:
-                aEmbed.add_field(name=(f"{achInfo["displayName"]}"), value=f"{achInfo["description"]}\n-# `{achInfo["percent"]}% of players unlocked`",inline=False)
+                aEmbed.add_field(name=(f""), value=f"\n\n_Next: ||\"{achInfo["displayName"]}\"|| (hidden)_",inline=False)
 
             await interaction.followup.send(embed=aEmbed)
             return
 
-    await interaction.followup.send("If you are seeing this, the bot thinks you have completed _every_ achievement in TOS2.\n\nNot to discredit you or anything, but that seems unlikely.\n\nIf you haven't completed _every_ achievement in TOS2, please contact silph5. This command is broken.")
+    if findingNext2:
+        await interaction.followup.send(embed=aEmbed)
+    else:
+        await interaction.followup.send("If you are seeing this, the bot thinks you have completed _every_ achievement in TOS2.\n\nNot to discredit you or anything, but that seems unlikely.\n\nIf you haven't completed _every_ achievement in TOS2, please contact silph5. This command is broken.")
             
 #----------------------------------------------------------------------------------------
 
