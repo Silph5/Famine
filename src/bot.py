@@ -71,7 +71,7 @@ async def linkSteamAccount(interaction: discord.Interaction, steam_id: str):
     profileName, error = await asyncio.to_thread(utils.getSteamProfileNameAndValidate, steamKey, steam_id)
 
     if error:
-        await interaction.followup.send(embed=utils.errorEmbed(errorStr=f"{error}\n\n _If you are unsure how to get your steamID, use /help for more info._"))
+        await interaction.followup.send(embed=utils.errorEmbed(errorStr=f"{error}\n\n _If you are unsure how to get your steamID, use /faminehelp for more info._"))
         return
     
     async with aiofiles.open(utils.steamLinkPath, "r") as f:
