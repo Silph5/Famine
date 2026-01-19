@@ -116,6 +116,7 @@ async def unlinkSteamAccount(interaction: discord.Interaction):
 async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
 
     await interaction.response.defer()
+    print("/achievements used")
 
     if not utils.hasNormalCommandPerm(interaction, bot.guilds):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
@@ -177,6 +178,8 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
 async def sendWinTotals(interaction:discord.Interaction):
 
     await interaction.response.defer()
+    print("/winstats used")
+
 
     if not utils.hasNormalCommandPerm(interaction, bot.guilds):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
@@ -247,6 +250,8 @@ async def sendWinTotals(interaction:discord.Interaction):
 @bot.tree.command(name="nextunobtained", description="Shows the most common achievement that you haven't unlocked")
 async def nextUnobtainedAch(interaction:discord.Interaction):
     await interaction.response.defer()
+    print("/nextunobtained used")
+
 
     if not utils.hasNormalCommandPerm(interaction, bot.guilds):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
@@ -329,6 +334,8 @@ async def genRoleFactionCode(interaction:discord.Interaction, role_name:str,
                              faction_name:Literal["Town", "Coven", "Serial killer", "Arsonist", "Werewolf", "Shroud", "Apocalypse", "Executioner", "Jester", "Pirate", "Doomsayer", "Vampire", "Cursed Soul"]):
     #TODO: find a better way to do that crap
 
+    print("/getrolefactcode used")
+
     if not utils.hasNormalCommandPerm(interaction, bot.guilds):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
@@ -358,6 +365,7 @@ async def genRoleFactionCode(interaction:discord.Interaction, role_name:str,
 
 @bot.tree.command(name="faminehelp", description="Lists all commands")
 async def cmdHelp(interaction:discord.Interaction):
+    print("/help used")
 
     if not utils.hasNormalCommandPerm(interaction, bot.guilds):
         await interaction.response.send_message(embed=utils.errorEmbed("Command cannot be used in this channel."))
