@@ -287,6 +287,8 @@ def getFactionColour(factionName):
             return int("0x66BF58", 16)
         case "coven":
             return int("0xA331EF", 16)
+        case "apocalypse":
+            return int ("0xFE014E", 16)
         case _:
             return int(roleInfo[factionName]["colour"], 16)
 
