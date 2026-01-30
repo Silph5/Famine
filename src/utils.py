@@ -4,6 +4,7 @@ import requests
 import re
 import Tos2Info
 import discord
+from datetime import datetime, timezone
 
 achInfoPath = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "achInfo.json")
 steamLinkPath = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),  "data", "steamLinks.json")
@@ -78,11 +79,14 @@ def getSteamProfileNameAndValidate(steamKey, steamId):
 
     return profile["response"]["players"][0]["personaname"], None
 
-def getAchCompletionStr(playerAchJson, achApiIndex):
+def isAchCompleted(playerAchJson, achApiIndex):
     if playerAchJson["playerstats"]["achievements"][achApiIndex]["achieved"] == 1:
-        return " - :white_check_mark:"
+        return True
     else:
-        return " - :x:"
+        return False
+    
+def getDateFromTime(unlockTime):
+    return datetime.fromtimestamp(unlockTime, tz=timezone.utc).strftime("%m/%d/%Y")
     
 #------------------------------------------------------------------------------------------------------
 #this is all for the big messy function that populates achInfo.json with info from various steamAPI endpoints. 

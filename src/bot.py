@@ -156,13 +156,17 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
 
     for ach in achInfoDict[roleName]["generalAchievements"]:
         endStr = ""
+        dateStr = ""
         if accountLinked and authorStatsReachable:
-            endStr = await asyncio.to_thread(utils.getAchCompletionStr, authorAchStats, ach["apiIndex"])
-
+            if utils.isAchCompleted(authorAchStats, ach["apiIndex"]):
+                endStr = " - :white_check_mark:"
+                dateStr = f"-# {utils.getDateFromTime(authorAchStats["playerstats"]["achievements"][ach["apiIndex"]]["unlocktime"])}\n"
+            else:
+                endStr = " - :x:"
         if ach["isSecret"]:
-            aEmbed.add_field(name=(f"||{ach["displayName"]}|| {endStr}"), value=f"Hidden achievement...\n-# `{ach["percent"]}% of players unlocked`", inline=False)
+            aEmbed.add_field(name=(f"||{ach["displayName"]}|| {endStr}"), value=f"{dateStr}Hidden achievement...\n-# `{ach["percent"]}% of players unlocked`", inline=False)
         else:
-            aEmbed.add_field(name=(f"{ach["displayName"]} {endStr}"), value=f"{ach["description"]}\n-# `{ach["percent"]}% of players unlocked`",inline=False)
+            aEmbed.add_field(name=(f"{ach["displayName"]} {endStr}"), value=f"{dateStr}{ach["description"]}\n-# `{ach["percent"]}% of players unlocked`",inline=False)
 
     if not accountLinked:
         aEmbed.add_field(name="",value="_Use /linksteam [steamID] to see your achievement completions_",inline=False)
