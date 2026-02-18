@@ -9,6 +9,7 @@ import aiofiles
 
 import Tos2Info
 import utils
+import graphing
 
 from discord.ext import commands
 from discord.ext import tasks
@@ -286,11 +287,15 @@ async def sendWinTotalsBucket(interaction:discord.Interaction, bucket_name:str):
 
     if not bucketName in Tos2Info.buckets:
         await interaction.followup.send(embed=utils.errorEmbed("Couldnt find role bucket."))
+        return
+
+    roleList = Tos2Info.buckets[bucketName]
 
     winStr = ""
+    winNumsList = []
     winAmtArr = [1, 5, 10, 25]
 
-    for role in Tos2Info.buckets[bucketName]:
+    for role in roleList:
         print(role)
         if not role in achInfoDict:
             continue
@@ -305,12 +310,16 @@ async def sendWinTotalsBucket(interaction:discord.Interaction, bucket_name:str):
                 break
 
         winStr += f"\n{role}: {roleWins}"
+        winNumsList.append(roleWins)
 
     statsEmbed = discord.Embed(title="Win statistics (highest win achievements unlocked):", colour=Tos2Info.getRoleColour(Tos2Info.buckets[bucketName][0]))
-    
     statsEmbed.add_field(name=f"{bucket_name} Roles", value=winStr, inline=True)
+
+    graphBuf = await asyncio.to_thread(graphing.genStackedProgressBarRoleBased, roleList, winNumsList, len(roleList)*25)
+    graph = discord.File(graphBuf, filename="bucketProgress.png")
+    statsEmbed.set_image(url="attachment://bucketProgress.png")
             
-    await interaction.followup.send(embed=statsEmbed)
+    await interaction.followup.send(embed=statsEmbed, file=graph)
 
 #----------------------------------------------------------------------------------------
 #I'd like to keep API calls to a max of 1 per function, i'll have to make an exception for it here unless i find a better a method.
