@@ -251,6 +251,91 @@ roleInfo = {
     }
 }
 
+buckets = {
+    "townpower": [
+        "jailor",
+        "marshal",
+        "mayor",
+        "monarch",
+        "prosecutor",
+        "catalyst"
+    ],
+    "townkilling": [
+        "deputy",
+        "trickster",
+        "veteran",
+        "vigilante"
+    ],
+    "townsupport": [
+        "admirer",
+        "amnesiac",
+        "retributionist",
+        "socialite",
+        "tavernkeeper"
+    ],
+    "towninvestigative": [
+        "coroner",
+        "investigator",
+        "lookout",
+        "psychic",
+        "seer",
+        "sheriff",
+        "spy",
+        "tracker"
+    ],
+    "townprotective": [
+        "bodyguard",
+        "cleric",
+        "crusader",
+        "oracle",
+        "trapper"
+    ],
+    "covenpower": [
+        "covenleader",
+        "hexmaster",
+        "witch",
+        "cultist"
+    ],
+    "covenkilling": [
+        "conjurer",
+        "jinx",
+        "ritualist"
+    ],
+    "covendeception": [
+        "dreamweaver",
+        "enchanter",
+        "illusionist",
+        "medusa"
+    ],
+    "covenutility": [
+        "necromancer",
+        "poisoner",
+        "potionmaster",
+        "voodoomaster",
+        "wildling"
+    ],
+    "neutralkilling": [
+        "arsonist",
+        "serialkiller",
+        "shroud",
+        "werewolf",
+        "vampire"
+    ],
+    "neutralevil": [
+        "doomsayer",
+        "executioner",
+        "jester",
+        "pirate",
+        "cursedsoul"
+    ],
+    "neutralapocalypse": [
+        "baker",
+        "berserker",
+        "plaguebearer",
+        "soulcollector"
+    ]
+}
+
 factionIDs = {
     "town": 1, 
     "coven": 2, 
