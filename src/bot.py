@@ -249,6 +249,70 @@ async def sendWinTotals(interaction:discord.Interaction):
     await interaction.followup.send(embed=statsEmbed)
 
 #----------------------------------------------------------------------------------------
+
+@bot.tree.command(name="winstatsbucket", description="shows highest win achievement for every role in a given bucket (e.g. Coven Utility)")
+@app_commands.describe(bucket_name="Name/alias of the TOS2 role bucket (e.g. town support/ts)")
+async def sendWinTotalsBucket(interaction:discord.Interaction, bucket_name:str):
+
+    await interaction.response.defer()
+    print("/bucketstats used")
+
+    if not utils.hasNormalCommandPerm(interaction, bot.guilds):
+        await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
+        return
+
+    async with aiofiles.open(utils.steamLinkPath, "r") as f:
+        data = await f.read()
+        steamLinksDict = json.loads(data)
+
+    if not str(interaction.user.id) in steamLinksDict:
+        await interaction.followup.send(embed=utils.errorEmbed("This command requires a linked steam account. Use /linksteam [steamID] to link your steam account."))
+        return
+    
+    async with aiohttp.ClientSession() as session:
+        async with session.get("https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/", params={"key":steamKey, "appid":"2140510", "steamid":steamLinksDict[str(interaction.user.id)]}) as response:
+            userAchStats = await response.json()
+
+    if "error" in userAchStats["playerstats"]:
+        await interaction.followup.send(embed=utils.errorEmbed(f"Failed to access achievement completions: {userAchStats["playerstats"]["error"]}"))
+        return
+
+    async with aiofiles.open(utils.achInfoPath, "r") as f:
+        data = await f.read()
+        achInfoDict = json.loads(data)
+
+    #most of the above is copied from winstats which isn't... ideal. i'll improve after the feature by itself is implemented
+    bucketName = bucket_name.lower().replace(" ", "")
+
+    if not bucketName in Tos2Info.buckets:
+        await interaction.followup.send(embed=utils.errorEmbed("Couldnt find role bucket."))
+
+    winStr = ""
+    winAmtArr = [1, 5, 10, 25]
+
+    for role in Tos2Info.buckets[bucketName]:
+        print(role)
+        if not role in achInfoDict:
+            continue
+        
+        roleWins = 0
+
+        for i in range(len(achInfoDict[role]["winAchievements"])-1, -1, -1): #iterate backwards
+            pStatsIndex = (achInfoDict[role]["winAchievements"][i]["apiIndex"])
+
+            if userAchStats["playerstats"]["achievements"][pStatsIndex]["achieved"]:
+                roleWins = winAmtArr[i]
+                break
+
+        winStr += f"\n{role}: {roleWins}"
+
+    statsEmbed = discord.Embed(title="Win statistics (highest win achievements unlocked):", colour=Tos2Info.getRoleColour(Tos2Info.buckets[bucketName][0]))
+    
+    statsEmbed.add_field(name=f"{bucket_name} Roles", value=winStr, inline=True)
+            
+    await interaction.followup.send(embed=statsEmbed)
+
+#----------------------------------------------------------------------------------------
 #I'd like to keep API calls to a max of 1 per function, i'll have to make an exception for it here unless i find a better a method.
 
 @bot.tree.command(name="nextunobtained", description="Shows the most common achievement that you haven't unlocked")
