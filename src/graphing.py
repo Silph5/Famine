@@ -8,28 +8,32 @@ import io
 
 import Tos2Info
 
-def drawFancyBar(ax, left, width, height, colour):
-    bar = FancyBboxPatch((left, -height/2), width, height, boxstyle=f"round,pad=0,rounding_size=0.4", linewidth=0, facecolor=colour)
+def drawFancyBar(ax, left, width, height, colour, alpha):
+    bar = FancyBboxPatch((left, -height/2), width, height, boxstyle=f"round,pad=0,rounding_size=0.5", linewidth=0, facecolor=colour, alpha=alpha)
     ax.add_patch(bar)
 
 def genStackedProgressBarRoleBased (roles, nums, totalNum):
     fig, ax = plt.subplots(figsize=(8, 0.5))
 
-    drawFancyBar(ax, 0, 100, 1, "#2b2b2b")
+    gapSize = 0.3
+    usableWidth = 100 - gapSize * (len(roles) - 1)
+
+    drawFancyBar(ax, 0, 100, 1, "#2b2b2b", 1)
 
     left = 0
     for role, num in zip(roles, nums):
-        width = (num/totalNum) * 100
+        width = (num/totalNum) * usableWidth
+        widthRemaining = ((25/totalNum)*usableWidth) - width
+
         colour = Tos2Info.getRoleColour(role)
 
         colour = f"#{colour:06X}" #pain because this func wasn't designed to return hex codes           
 
-        drawFancyBar(ax, left, width, 1, colour)
-
-        if width > 8:
-            ax.text(left + width/2, 0, f"{int(width)}%", ha="center", va="center", fontsize=8, color="white", weight="bold")
-
+        drawFancyBar(ax, left, width, 1, colour, 1)
         left += width
+
+        drawFancyBar(ax, left, widthRemaining, 1, colour, 0.25)
+        left += widthRemaining + gapSize
 
 
     ax.set_xlim(0, 100)

@@ -296,7 +296,7 @@ async def sendWinTotalsBucket(interaction:discord.Interaction, bucket_name:str):
     winAmtArr = [1, 5, 10, 25]
 
     for role in roleList:
-        print(role)
+
         if not role in achInfoDict:
             continue
         
