@@ -24,12 +24,23 @@ def changeColBrightness (colour, changeFactor):
     return (r << 16) | (g << 8) | b
 
 def genStackedProgressBarRoleBased (roles, nums, totalNum):
-    fig, ax = plt.subplots(figsize=(8, 0.5))
+    fig = plt.figure(figsize=(8, 0.6))
+    axRoles = fig.add_axes([0.05, 0.05, 0.9, 0.36])
+    axOverview = fig.add_axes([0.05, 0.6, 0.9, 0.03])
+
+    left = 0
+
+    drawFancyBar(axOverview, 0, 100, 1, "#354f6c", 1)
+    drawFancyBar(axOverview, 0, (sum(nums)/totalNum)*100, 1, "#2886f1", 1)
+
+    axOverview.set_xlim(0, 100)
+    axOverview.set_ylim(-0.5, 0.5)
+    axOverview.axis("off")
 
     gapSize = 0.3
     usableWidth = 100 - gapSize * (len(roles) - 1)
 
-    drawFancyBar(ax, 0, 100, 1, "#2b2b2b", 1)
+    drawFancyBar(axRoles, 0, 100, 1, "#2b2b2b", 1)
 
     left = 0
 
@@ -45,23 +56,22 @@ def genStackedProgressBarRoleBased (roles, nums, totalNum):
         while colour in coloursUsed:
             recolourCount += 1
             
-            colour = changeColBrightness(colour, 1 + 0.6 * math.sin(recolourCount * 2.1))
-            print(colour)
+            colour = changeColBrightness(colour, 1 + 0.35 * math.sin(recolourCount * 2.1))
 
         coloursUsed.append(colour)
 
         colour = f"#{colour:06X}" #pain because this func wasn't designed to return hex codes           
 
-        drawFancyBar(ax, left, width, 1, colour, 1)
+        drawFancyBar(axRoles, left, width, 1, colour, 1)
         left += width
 
-        drawFancyBar(ax, left, widthRemaining, 1, colour, 0.2)
+        drawFancyBar(axRoles, left, widthRemaining, 1, colour, 0.2)
         left += widthRemaining + gapSize
 
 
-    ax.set_xlim(0, 100)
-    ax.set_ylim(-0.5, 0.5)
-    ax.axis("off")
+    axRoles.set_xlim(0, 100)
+    axRoles.set_ylim(-0.5, 0.5)
+    axRoles.axis("off")
 
     plt.tight_layout()
 
