@@ -285,6 +285,8 @@ async def sendWinTotalsBucket(interaction:discord.Interaction, bucket_name:str):
     #most of the above is copied from winstats which isn't... ideal. i'll improve after the feature by itself is implemented
     bucketName = bucket_name.lower().replace(" ", "")
 
+    bucketName = Tos2Info.bucketAliasLookup.get(bucketName, bucketName)
+
     if not bucketName in Tos2Info.buckets:
         await interaction.followup.send(embed=utils.errorEmbed("Couldnt find role bucket."))
         return

@@ -379,7 +379,7 @@ def getFactionColour(factionName):
         case _:
             return int(roleInfo[factionName]["colour"], 16)
 
-roleAliases = {
+_roleAliases = {
     ("adm", "admi"): "admirer",
     ("amne",): "amnesiac",
     ("bg", "body"): "bodyguard",
@@ -437,5 +437,25 @@ roleAliases = {
 }
 
 aliasLookup = {
-    alias: fullName for keys, fullName in roleAliases.items() for alias in keys
+    alias: fullName for keys, fullName in _roleAliases.items() for alias in keys
+}
+
+_bucketAliases = {
+    ("tpow", "pow", "town_power",): "townpower",
+    ("tk", "town_killing", "townkiller"): "townkilling",
+    ("ts", "town_support",): "townsupport",
+    ("ti", "town_investigative", "towninv", "towninvest",): "towninvestigative",
+    ("tp", "tplo", "town_protective",): "townprotective",
+    ("cpow", "coven_power", "covpower",): "covenpower",
+    ("ck", "coven_killing", "covkilling",): "covenkilling",
+    ("cd", "covdeception", "coven_deception",): "covendeception",
+    ("cu", "covutility", "coven_utility",): "covenutility",
+    ("nk", "skarso", "neutral_killing", "neutralkiller",): "neutralkilling",
+    ("ne", "neutral_evil",): "neutralevil",
+    ("na", "neutral_apocalypse", "neutralapoc",): "neutralapocalypse",
+    ("no", "to", "co", "townoutlier", "neutraloutlier", "covenoutlier", "town_outlier", "coven_outlier", "neutral_outlier", "outlier",): "outliers"
+}
+
+bucketAliasLookup = {
+    alias: fullName for keys, fullName in _bucketAliases.items() for alias in keys
 }
