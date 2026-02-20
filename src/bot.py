@@ -402,7 +402,7 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
     if findingNext2:
         await interaction.followup.send(embed=aEmbed)
     else:
-        await interaction.followup.send("If you are seeing this, the bot thinks you have completed _every_ achievement in TOS2.\n\nNot to discredit you or anything, but that seems unlikely.\n\nIf you haven't completed _every_ achievement in TOS2, please contact silph5. This command is broken.")
+        await interaction.followup.send("If you are seeing this, Famine thinks you have completed _every_ achievement in TOS2.\n\n If you have really gone through the gargantuan effort of doing this... congratulations, that's kind of insane \n\nHowever, if you haven't completed _every_ achievement in TOS2, please contact silph5. This command is broken.")
             
 #----------------------------------------------------------------------------------------
 

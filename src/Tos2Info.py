@@ -258,7 +258,6 @@ buckets = {
         "mayor",
         "monarch",
         "prosecutor",
-        "catalyst"
     ],
     "townkilling": [
         "deputy",
@@ -294,7 +293,6 @@ buckets = {
         "covenleader",
         "hexmaster",
         "witch",
-        "cultist"
     ],
     "covenkilling": [
         "conjurer",
@@ -319,20 +317,24 @@ buckets = {
         "serialkiller",
         "shroud",
         "werewolf",
-        "vampire"
     ],
     "neutralevil": [
         "doomsayer",
         "executioner",
         "jester",
         "pirate",
-        "cursedsoul"
     ],
     "neutralapocalypse": [
         "baker",
         "berserker",
         "plaguebearer",
         "soulcollector"
+    ],
+    "outliers": [
+        "catalyst",
+        "cultist",
+        "vampire",
+        "cursedsoul"
     ]
 }
 
