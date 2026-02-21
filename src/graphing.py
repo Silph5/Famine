@@ -47,7 +47,7 @@ def genStackedProgressBarRoleBased (rolesList, numsList, maxNumsList, coloursLis
     maxTotal = sum(maxNumsList)
     total = sum(numsList)
     
-    fig = plt.figure(figsize=(8, 0.6))
+    fig = plt.figure(figsize=(8, 0.4))
     axRoles = fig.add_axes([0.05, 0.05, 0.9, 0.36])
     axOverview = fig.add_axes([0.05, 0.6, 0.9, 0.03])
 
@@ -70,7 +70,7 @@ def genStackedProgressBarRoleBased (rolesList, numsList, maxNumsList, coloursLis
     for b in range(len(rolesList)):
 
         width = (numsList[b]/maxTotal) * usableWidth
-        widthRemaining = ((25/maxTotal)*usableWidth) - width        
+        widthRemaining = ((maxNumsList[b]/maxTotal)*usableWidth) - width        
 
         colour = f"#{coloursList[b]:06X}" #pain because this func wasn't designed to return hex codes           
 
@@ -84,8 +84,6 @@ def genStackedProgressBarRoleBased (rolesList, numsList, maxNumsList, coloursLis
     axRoles.set_xlim(0, 100)
     axRoles.set_ylim(-0.5, 0.5)
     axRoles.axis("off")
-
-    plt.tight_layout()
 
     buffer = io.BytesIO()
     plt.savefig(buffer, format="png", dpi=200, transparent=True)
