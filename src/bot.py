@@ -169,6 +169,18 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
         else:
             aEmbed.add_field(name=(f"{ach["displayName"]} {endStr}"), value=f"{dateStr}{ach["description"]}\n-# `{ach["percent"]}% of players unlocked`",inline=False)
 
+    if accountLinked and authorStatsReachable:
+        winAmtArr = [1, 5, 10, 25]
+        roleWins = 0
+
+        for i in range(len(achInfoDict[roleName]["winAchievements"])-1, -1, -1): #iterate backwards
+            pStatsIndex = (achInfoDict[roleName]["winAchievements"][i]["apiIndex"])
+
+            if authorAchStats["playerstats"]["achievements"][pStatsIndex]["achieved"]:
+                roleWins = winAmtArr[i]
+                break
+        aEmbed.add_field(name="",value=f"Wins: {roleWins}+")
+
     if not accountLinked:
         aEmbed.add_field(name="",value="_Use /linksteam [steamID] to see your achievement completions_",inline=False)
 
