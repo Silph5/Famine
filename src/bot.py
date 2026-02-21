@@ -307,6 +307,8 @@ async def sendWinTotalsBucket(interaction:discord.Interaction, bucket_name:str):
 
     winStr = ""
     winNumsList = []
+    maxWinNumsList = []
+    coloursList = []
     winAmtArr = [1, 5, 10, 25]
 
     for role in roleList:
@@ -325,11 +327,13 @@ async def sendWinTotalsBucket(interaction:discord.Interaction, bucket_name:str):
 
         winStr += f"\n{role}: {roleWins}"
         winNumsList.append(roleWins)
+        maxWinNumsList.append(25)
+        coloursList.append(Tos2Info.getRoleColour(role))
 
     statsEmbed = discord.Embed(title="Win statistics (highest win achievements unlocked):", colour=Tos2Info.getRoleColour(Tos2Info.buckets[bucketName][0]))
     statsEmbed.add_field(name=f"{bucket_name} Roles", value=winStr, inline=True)
 
-    graphBuf = await asyncio.to_thread(graphing.genStackedProgressBarRoleBased, roleList, winNumsList, len(roleList)*25)
+    graphBuf = await asyncio.to_thread(graphing.genStackedProgressBarRoleBased, roleList, winNumsList, maxWinNumsList, coloursList)
     graph = discord.File(graphBuf, filename="bucketProgress.png")
     statsEmbed.set_image(url="attachment://bucketProgress.png")
             

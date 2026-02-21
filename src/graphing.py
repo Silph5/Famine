@@ -23,7 +23,30 @@ def changeColBrightness (colour, changeFactor):
 
     return (r << 16) | (g << 8) | b
 
-def genStackedProgressBarRoleBased (roles, nums, totalNum):
+def differColours(coloursList):
+
+    outList = []
+    
+    for col in range(len(coloursList)):
+            
+            colour = coloursList[col]
+            
+            recolourCount = 0
+            while colour in outList:
+                recolourCount += 1
+                colour = changeColBrightness(colour, 1 + 0.35 * math.sin(recolourCount * 2.1))
+
+            outList.append(colour)
+
+    return outList
+
+def genStackedProgressBarRoleBased (rolesList, numsList, maxNumsList, coloursList):
+
+    differColours(coloursList)
+
+    maxTotal = sum(maxNumsList)
+    total = sum(numsList)
+    
     fig = plt.figure(figsize=(8, 0.6))
     axRoles = fig.add_axes([0.05, 0.05, 0.9, 0.36])
     axOverview = fig.add_axes([0.05, 0.6, 0.9, 0.03])
@@ -31,36 +54,25 @@ def genStackedProgressBarRoleBased (roles, nums, totalNum):
     left = 0
 
     drawFancyBar(axOverview, 0, 100, 1, "#354f6c", 1)
-    drawFancyBar(axOverview, 0, (sum(nums)/totalNum)*100, 1, "#2886f1", 1)
+    drawFancyBar(axOverview, 0, (total/maxTotal)*100, 1, "#2886f1", 1)
 
     axOverview.set_xlim(0, 100)
     axOverview.set_ylim(-0.5, 0.5)
     axOverview.axis("off")
 
     gapSize = 0.3
-    usableWidth = 100 - gapSize * (len(roles) - 1)
+    usableWidth = 100 - gapSize * (len(rolesList) - 1)
 
     drawFancyBar(axRoles, 0, 100, 1, "#2b2b2b", 1)
 
     left = 0
 
-    coloursUsed = []
+    for b in range(len(rolesList)):
 
-    for role, num in zip(roles, nums):
-        width = (num/totalNum) * usableWidth
-        widthRemaining = ((25/totalNum)*usableWidth) - width
+        width = (numsList[b]/maxTotal) * usableWidth
+        widthRemaining = ((25/maxTotal)*usableWidth) - width        
 
-        colour = Tos2Info.getRoleColour(role)
-
-        recolourCount = 0
-        while colour in coloursUsed:
-            recolourCount += 1
-            
-            colour = changeColBrightness(colour, 1 + 0.35 * math.sin(recolourCount * 2.1))
-
-        coloursUsed.append(colour)
-
-        colour = f"#{colour:06X}" #pain because this func wasn't designed to return hex codes           
+        colour = f"#{coloursList[b]:06X}" #pain because this func wasn't designed to return hex codes           
 
         drawFancyBar(axRoles, left, width, 1, colour, 1)
         left += width
