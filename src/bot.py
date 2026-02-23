@@ -512,6 +512,7 @@ async def adminHelp(interaction:discord.Interaction):
 
     if not interaction.user.guild_permissions.administrator:
         await interaction.response.send_message(embed=utils.errorEmbed("This command is administrator only."), ephemeral=True)
+        return
 
     gSettings = utils.getGuildSettings(interaction.guild.id)
     
