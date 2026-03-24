@@ -119,7 +119,7 @@ roleInfo = {
         "alignment": ["Coven", "Killing"],
         "id": 25
     },
-    "covenleader": {
+    "archmage": {
         "alignment": ["Coven", "Power"],
         "id": 26
     },
@@ -290,7 +290,7 @@ buckets = {
         "trapper"
     ],
     "covenpower": [
-        "covenleader",
+        "archmage",
         "hexmaster",
         "witch",
     ],
@@ -407,7 +407,7 @@ _roleAliases = {
     ("vet",): "veteran",
     ("vig", "vigi"): "vigilante",
     ("conj",): "conjurer",
-    ("cl", "cov", "leader", "coven_leader", "coven"): "covenleader",
+    ("cl", "cov", "leader", "coven_leader", "coven", "arch", "mage", "am"): "archmage",
     ("cult",): "cultist",
     ("dw", "dream"): "dreamweaver",
     ("ench",): "enchanter",
