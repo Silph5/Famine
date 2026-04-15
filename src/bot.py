@@ -152,7 +152,7 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
     if accountLinked and ("error" in authorAchStats["playerstats"]):
         authorStatsReachable = False
         
-    aEmbed = discord.Embed(title=f"Achievements for {initialRoleName}:",color=Tos2Info.getRoleColour(roleName))
+    aEmbed = discord.Embed(title=f"Achievements for {Tos2Info.getRoleDisplayName(roleName)}:",color=Tos2Info.getRoleColour(roleName))
     aEmbed.set_thumbnail(url=achInfoDict[roleName]["generalAchievements"][0]["icon"])
 
     for ach in achInfoDict[roleName]["generalAchievements"]:
@@ -253,15 +253,15 @@ async def sendWinTotals(interaction:discord.Interaction):
             case "Town":
                 townWins += roleWins
                 townMaxWins += 25
-                townStr += f"\n{role}: {roleWins}"
+                townStr += f"\n{Tos2Info.getRoleDisplayName(role)}: {roleWins}"
             case "Coven":
                 covWins += roleWins
                 covMaxWins += 25
-                covStr += f"\n{role}: {roleWins}"
+                covStr += f"\n{Tos2Info.getRoleDisplayName(role)}: {roleWins}"
             case "Neutral":
                 neutWins += roleWins
                 neutMaxWins += 25
-                neutStr += f"\n{role}: {roleWins}"
+                neutStr += f"\n{Tos2Info.getRoleDisplayName(role)}: {roleWins}"
     
     avgWins = round(totalWins / len(Tos2Info.roleInfo), 2)
 
@@ -346,7 +346,7 @@ async def sendWinTotalsBucket(interaction:discord.Interaction, bucket_name:str):
                 roleWins = winAmtArr[i]
                 break
 
-        winStr += f"\n{role}: {roleWins}"
+        winStr += f"\n{Tos2Info.getRoleDisplayName(role)}: {roleWins}"
         winNumsList.append(roleWins)
         maxWinNumsList.append(25)
         coloursList.append(Tos2Info.getRoleColour(role))
@@ -473,9 +473,6 @@ async def genRoleFactionCode(interaction:discord.Interaction, role_name:str,
     cEmbed = discord.Embed(title=f"Code for {faction_name} aligned {role_name}:", description=f"[[#{rID},{fID}]]", color=Tos2Info.getFactionColour(factionName))
 
     await interaction.response.send_message(embed=cEmbed)
-
-    #this entire command is really poorly implemented, honestly. It's fine for now.
-    #not sure basing the rIDs off the steam API is a good idea. May hardcode them into Tos2Info in the future
     
 #----------------------------------------------------------------------------------------
 

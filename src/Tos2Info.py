@@ -93,7 +93,8 @@ roleInfo = {
     },
     "tavernkeeper": {
         "alignment": ["Town", "Support"],
-        "id": 19
+        "id": 19,
+        "split": 6
     },
     "tracker": {
         "alignment": ["Town", "Investigative"],
@@ -137,7 +138,8 @@ roleInfo = {
     },
     "hexmaster": {
         "alignment": ["Coven", "Power"],
-        "id": 29
+        "id": 29,
+        "split": 3
     },
     "illusionist": {
         "alignment": ["Coven", "Deception"],
@@ -161,7 +163,8 @@ roleInfo = {
     },
     "potionmaster": {
         "alignment": ["Coven", "Utility"],
-        "id": 35
+        "id": 35,
+        "split": 6
     },
     "ritualist": {
         "alignment": ["Coven", "Killing"],
@@ -169,7 +172,8 @@ roleInfo = {
     },
     "voodoomaster": {
         "alignment": ["Coven", "Utility"],
-        "id": 37
+        "id": 37,
+        "split": 6
     },
     "wildling": {
         "alignment": ["Coven", "Utility"],
@@ -197,7 +201,8 @@ roleInfo = {
     "cursedsoul": {
         "alignment": ["Neutral", "Outlier"],
         "colour": "0xF5A563",
-        "id": 53
+        "id": 53,
+        "split": 6
     },
     "doomsayer": {
         "alignment": ["Neutral", "Evil"],
@@ -227,7 +232,8 @@ roleInfo = {
     "serialkiller": {
         "alignment": ["Neutral", "Killing"],
         "colour": "0x1D4DFC",
-        "id": 48
+        "id": 48,
+        "split": 6,
     },
     "shroud": {
         "alignment": ["Neutral", "Killing"],
@@ -237,7 +243,8 @@ roleInfo = {
     "soulcollector": {
         "alignment": ["Neutral", "Apocalypse"],
         "colour": "0xFE014E",
-        "id": 50
+        "id": 50,
+        "split": 4
     },
     "werewolf": {
         "alignment": ["Neutral", "Killing"],
@@ -378,6 +385,20 @@ def getFactionColour(factionName):
             return int ("0xFE014E", 16)
         case _:
             return int(roleInfo[factionName]["colour"], 16)
+        
+def getRoleDisplayName(roleInternalName):
+    displayName = roleInternalName[0].upper() + roleInternalName[1:]
+
+    if not roleInternalName in roleInfo:
+        return displayName;
+
+    if not "split" in roleInfo[roleInternalName]:
+        return displayName;
+
+    splitPoint = roleInfo[roleInternalName]["split"]
+
+    displayName = displayName[:splitPoint] + " " + displayName[splitPoint].upper() + displayName[splitPoint+1:]
+    return displayName;
 
 _roleAliases = {
     ("adm", "admi"): "admirer",
