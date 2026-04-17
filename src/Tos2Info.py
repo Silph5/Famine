@@ -5,256 +5,314 @@
 roleInfo = {
     "admirer": {
         "alignment": ("Town", "Support"),
-        "id": 1
+        "id": 1,
+        "hiddenDesc": "Have a Witch try to control a Bestowed player"
     },
     "amnesiac": {
         "alignment": ("Town", "Support"),
-        "id": 2
+        "id": 2,
+        "hiddenDesc": "Remember you were a Jailor"
     },
     "bodyguard": {
         "alignment": ("Town", "Protective"),
-        "id": 3
+        "id": 3,
+        "hiddenDesc": "Protect someone from War"
     },
     "cleric": {
         "alignment": ("Town", "Protective"),
-        "id": 4
+        "id": 4,
+        "hiddenDesc": "Protect a Bodyguard that successfully protected somebody"
     },
     "catalyst": {
         "alignment": ("Town", "Outlier"),
-        "id": 59
+        "id": 59,
+        #cata is missing its secret ach from the api due to improper naming, will fix later
     },
     "coroner": {
         "alignment": ("Town", "Investigative"),
-        "id": 5
+        "id": 5,
+        "hiddenDesc": "Find Pestilence"
     },
     "crusader": {
         "alignment": ("Town", "Protective"),
-        "id": 6
+        "id": 6,
+        "hiddenDesc": "Visit the same target as War and attack them"
     },
     "deputy": {
         "alignment": ("Town", "Killing"),
-        "id": 7
+        "id": 7,
+        "hiddenDesc": "Shoot a Conjurer"
     },
     "investigator": {
         "alignment": ("Town", "Investigative"),
-        "id": 8
+        "id": 8,
+        "hiddenDesc": "Find Trespassing 3 times in a game"
     },
     "jailor": {
         "alignment": ("Town", "Power"),
-        "id": 9
+        "id": 9,
+        "hiddenDesc": "Execute an Apocalypse god"
     },
     "lookout": {
         "alignment": ("Town", "Investigative"),
-        "id": 10
+        "id": 10,
+        "hiddenDesc": "Watch someone with no visitors die"
     },
     "marshal": {
         "alignment": ("Town", "Power"),
-        "id": 55
+        "id": 55,
+        "hiddenDesc": "Execute a Knighted evil player during a tribunal"
     },
     "mayor": {
         "alignment": ("Town", "Power"),
-        "id": 11
+        "id": 11,
+        "hiddenDesc": "Reveal after being Knighted"
     },
     "monarch": {
         "alignment": ("Town", "Power"),
-        "id": 12
+        "id": 12,
+        "hiddenDesc": "Knight yourself"
     },
     "oracle": {
         "alignment": ("Town", "Protective"),
-        "id": 56
+        "id": 56,
+        "hiddenDesc": "Successfully protect another Oracle"
     },
     "prosecutor": {
         "alignment": ("Town", "Power"),
-        "id": 13
+        "id": 13,
+        "hiddenDesc": "Prosecute a Horseman of the Apocalypse"
     },
     "psychic": {
         "alignment": ("Town", "Investigative"),
-        "id": 14
+        "id": 14,
+        "hiddenDesc": "Have no Vision due to insomnia"
     },
     "retributionist": {
         "alignment": ("Town", "Support"),
-        "id": 15
+        "id": 15,
+        "hiddenDesc": "Resurrect a Monarch and Knight yourself"
     },
     "seer": {
         "alignment": ("Town", "Investigative"),
-        "id": 16
+        "id": 16,
+        "hiddenDesc": "Find two Neutral Killing roles as enemies"
     },
     "sheriff": {
         "alignment": ("Town", "Investigative"),
-        "id": 17
+        "id": 17,
+        "hiddenDesc": "Find a Pirate to be suspicious"
     },
     "socialite": {
         "alignment": ("Town", "Support"),
-        "id": 54
+        "id": 54,
+        "hiddenDesc": "Throw a party with another Socialite"
     },
     "spy": {
         "alignment": ("Town", "Investigative"),
-        "id": 18
+        "id": 18,
+        "hiddenDesc": "See someone get their dreams invaded"
     },
     "tavernkeeper": {
         "alignment": ("Town", "Support"),
         "id": 19,
-        "split": 6
+        "split": 6,
+        "hiddenDesc": "Be jailed by the Jailor you previously roleblocked"
     },
     "tracker": {
         "alignment": ("Town", "Investigative"),
-        "id": 20
+        "id": 20,
+        "hiddenDesc": "Track yourself."
     },
     "trapper": {
         "alignment": ("Town", "Protective"),
-        "id": 21
+        "id": 21,
+        "hiddenDesc": "See War trigger your Trap"
     },
     "trickster": {
         "alignment": ("Town", "Killing"),
-        "id": 22
+        "id": 22,
+        "hiddenDesc": "Unleash a Werewolf rampage"
     },
     "veteran": {
         "alignment": ("Town", "Killing"),
-        "id": 23
+        "id": 23,
+        "hiddenDesc": "Attack War"
     },
     "vigilante": {
         "alignment": ("Town", "Killing"),
-        "id": 24
+        "id": 24,
+        "hiddenDesc": "Shoot yourself at night"
     },
     "conjurer": {
         "alignment": ("Coven", "Killing"),
-        "id": 25
+        "id": 25,
+        "hiddenDesc": "Kill an Admirer's found Obsession"
     },
     "archmage": {
         "alignment": ("Coven", "Power"),
-        "id": 26
+        "id": 26,
+        "hiddenDesc": "Retrain a Hex Master, Potion Master or Voodoo Master into eachother"
     },
     "cultist": {
         "alignment": ("Coven", "Outlier"),
-        "id": 60
+        "id": 60,
+        "hiddenDesc": "Convert a Vigilante who previously shot a member of your faction"
     },
     "dreamweaver": {
         "alignment": ("Coven", "Deception"),
-        "id": 27
+        "id": 27,
+        "hiddenDesc": "Give an unrevealed Mayor insomnia"
     },
     "enchanter": {
         "alignment": ("Coven", "Utility"),
-        "id": 28
+        "id": 28,
+        "hiddenDesc": "Forge a Coven member's last will"
     },
     "hexmaster": {
         "alignment": ("Coven", "Power"),
         "id": 29,
-        "split": 3
+        "split": 3,
+        "hiddenDesc": "Hex a player with a Crusader guarding them"
     },
     "illusionist": {
         "alignment": ("Coven", "Deception"),
-        "id": 30
+        "id": 30,
+        "hiddenDesc": "Illusion a Poisoner who is Smogging"
     },
     "jinx": {
         "alignment": ("Coven", "Killing"),
-        "id": 31
+        "id": 31,
+        "hiddenDesc": "Jinx a Werewolf"
     },
     "medusa": {
         "alignment": ("Coven", "Deception"),
-        "id": 32
+        "id": 32,
+        "hiddenDesc": "Stone a Serial Killer"
     },
     "necromancer": {
         "alignment": ("Coven", "Utility"),
-        "id": 33
+        "id": 33,
+        "hiddenDesc": "Reanimate War"
     },
     "poisoner": {
         "alignment": ("Coven", "Utility"),
-        "id": 34
+        "id": 34,
+        "hiddenDesc": "Have a player you Smogged at night die"
     },
     "potionmaster": {
         "alignment": ("Coven", "Utility"),
         "id": 35,
-        "split": 6
+        "split": 6,
+        "hiddenDesc": "Reveal a Vigilante the night they shoot you"
     },
     "ritualist": {
         "alignment": ("Coven", "Killing"),
-        "id": 36
+        "id": 36,
+        "hiddenDesc": "Perform a Blood Ritual on a Doomsayer"
     },
     "voodoomaster": {
         "alignment": ("Coven", "Utility"),
         "id": 37,
-        "split": 6
+        "split": 6,
+        "hiddenDesc": "Hang a Deafened player"
     },
     "wildling": {
         "alignment": ("Coven", "Utility"),
-        "id": 38
+        "id": 38,
+        "hiddenDesc": "See a Trickster absorb an attack"
     },
     "witch": {
         "alignment": ("Coven", "Power"),
-        "id": 39
+        "id": 39,
+        "hiddenDesc": "Control War, Horseman of the Apocalypse"
     },
     "arsonist": {
         "alignment": ("Neutral", "Killing"),
         "colour": "0xDB7601",
-        "id": 40
+        "id": 40,
+        "hiddenDesc": "Douse yourself"
     },
     "baker": {
         "alignment": ("Neutral", "Apocalypse"),
         "colour": "0xFE014E",
-        "id": 41
+        "id": 41,
+        "hiddenDesc": "Kill 5 players in one night from Famine"
     },
     "berserker": {
         "alignment": ("Neutral", "Apocalypse"),
         "colour": "0xFE014E",
-        "id": 42
+        "id": 42,
+        "hiddenDesc": "Kill a player protected by a Cleric"
     },
     "cursedsoul": {
         "alignment": ("Neutral", "Outlier"),
         "colour": "0xF5A563",
         "id": 53,
-        "split": 6
+        "split": 6,
+        "hiddenDesc": "Execute a Jailor whose role you stole"
     },
     "doomsayer": {
         "alignment": ("Neutral", "Evil"),
         "colour": "0x00CC99",
-        "id": 43
+        "id": 43,
+        "hiddenDesc": "Doom 3 players by night 3"
     },
     "executioner": {
         "alignment": ("Neutral", "Evil"),
         "colour": "0x949797",
-        "id": 44
+        "id": 44,
+        "hiddenDesc": "Hang a Deputy who successfully shot as your target"
     },
     "jester": {
         "alignment": ("Neutral", "Evil"),
         "colour": "0xF5A6D4",
-        "id": 45
+        "id": 45,
+        "hiddenDesc": "Free from Guilt"
     },
     "pirate": {
         "alignment": ("Neutral", "Evil"),
         "colour": "0xECC23E",
-        "id": 46
+        "id": 46,
+        "hiddenDesc": "Win the game without Plundering anyone"
     },
     "plaguebearer": {
         "alignment": ("Neutral", "Apocalypse"),
         "colour": "0xFE014E",
-        "id": 47
+        "id": 47,
+        "hiddenDesc": "Survive a Pirate trying to Plunder you"
     },
     "serialkiller": {
         "alignment": ("Neutral", "Killing"),
         "colour": "0x1D4DFC",
         "id": 48,
         "split": 6,
+        "hiddenDesc": "Kill the Pirate who has you as a Landlubber"
     },
     "shroud": {
         "alignment": ("Neutral", "Killing"),
         "colour": "0x6699FF",
-        "id": 49
+        "id": 49,
+        "hiddenDesc": "Attack 2 players in one night"
     },
     "soulcollector": {
         "alignment": ("Neutral", "Apocalypse"),
         "colour": "0xFE014E",
         "id": 50,
-        "split": 4
+        "split": 4,
+        "hiddenDesc": "Survive a Conjurer nuke"
     },
     "werewolf": {
         "alignment": ("Neutral", "Killing"),
         "colour": "0x9D7038",
-        "id": 51
+        "id": 51,
+        "hiddenDesc": "Kill atleast one Town, Coven and Neutral in one night"
     },
     "vampire": {
         "alignment": ("Neutral", "Outlier"),
         "colour": "0xd90707",   
-        "id": 52
+        "id": 52,
+        "hiddenDesc": "Convert 3 Town Killing roles in one game"
     }
 }
 

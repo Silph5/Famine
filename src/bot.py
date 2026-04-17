@@ -165,7 +165,7 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
             else:
                 endStr = " - :x:"
         if ach["isSecret"]:
-            aEmbed.add_field(name=(f"||{ach["displayName"]}|| {endStr}"), value=f"{dateStr}Hidden achievement...\n-# `{ach["percent"]}% of players unlocked`", inline=False)
+            aEmbed.add_field(name=(f"||{ach["displayName"]}|| (secret) {endStr}"), value=f"{dateStr}||{Tos2Info.roleInfo[roleName]["hiddenDesc"]}||\n-# `{ach["percent"]}% of players unlocked`", inline=False)
         else:
             aEmbed.add_field(name=(f"{ach["displayName"]} {endStr}"), value=f"{dateStr}{ach["description"]}\n-# `{ach["percent"]}% of players unlocked`",inline=False)
 
@@ -423,7 +423,7 @@ async def nextUnobtainedAch(interaction:discord.Interaction):
                 aEmbed.set_thumbnail(url=achInfo["icon"])
 
                 if achInfo["isSecret"]:
-                    aEmbed.add_field(name=(f"||{achInfo["displayName"]}||"), value=f"Hidden achievement...\n-# `{achInfo["percent"]}% of players unlocked`", inline=False)
+                    aEmbed.add_field(name=(f"||{achInfo["displayName"]}||  (secret)"), value=f"||{Tos2Info.roleInfo[roleName]["hiddenDesc"]}||\n-# `{ach["percent"]}% of players unlocked`", inline=False)
                 else:
                     aEmbed.add_field(name=(f"{achInfo["displayName"]}"), value=f"{achInfo["description"]}\n-# `{achInfo["percent"]}% of players unlocked`",inline=False)
 
@@ -494,7 +494,7 @@ async def cmdHelp(interaction:discord.Interaction):
     helpEmbed.add_field(name="/nextunobtained", value="Shows the next most common achievement that you have not completed. Requires a linked account.\n\n-# Usage example: `/nextunobtained`", inline=False)
     helpEmbed.add_field(name="/getrolefactioncode", value="Gives a code that can you typed or pasted into game chat which produces a role mention of a given role as being aligned with a given faction. For example, a coven-aligned executioner \n\n-# Usage example: `/getrolefactioncode cs Town`", inline=False)
     helpEmbed.add_field(name="/adminhelp", value="Presents a list of per-guild bot configuration commands. This command can only be used by server administrators. \n\n-# Usage example: `/adminhelp`", inline=False)
-    helpEmbed.add_field(name="", value="-# version 1.2.2")
+    helpEmbed.add_field(name="", value="-# version 1.2.3")
 
     await interaction.response.send_message(embed=helpEmbed)
 #----------------------------------------------------------------------------------------
