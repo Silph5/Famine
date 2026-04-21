@@ -89,7 +89,7 @@ def getDateFromTime(unlockTime):
     return datetime.fromtimestamp(unlockTime, tz=timezone.utc).strftime("%m/%d/%Y")
 
 #------------------------------------------------------------------------------------------------------
-#simple pagination to reduce the space taken by /winstats embeds
+#i scrapped the initial use for this, but i'm gonna keep the pagination class here incase of future use
 
 class Pagination(discord.ui.View):
     def __init__(self, interaction: discord.Interaction, embeds):

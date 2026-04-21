@@ -265,16 +265,13 @@ async def sendWinTotals(interaction:discord.Interaction):
     
     avgWins = round(totalWins / len(Tos2Info.roleInfo), 2)
 
-    tStatsEmbed = discord.Embed(title="Win statistics (highest win achievements unlocked):", colour=0xd4af37)
-    cStatsEmbed = discord.Embed(title="Win statistics (highest win achievements unlocked):", colour=0xd4af37)
-    nStatsEmbed = discord.Embed(title="Win statistics (highest win achievements unlocked):", colour=0xd4af37)
+    statsEmbed = discord.Embed(title="Win statistics (highest win achievements unlocked):", colour=0xd4af37)
 
-    tStatsEmbed.add_field(name="Town Roles", value=townStr, inline=True)
-    cStatsEmbed.add_field(name="Coven Roles", value=covStr, inline=True)
-    nStatsEmbed.add_field(name="Neutral Roles", value=neutStr, inline=True)
-    tStatsEmbed.add_field(name="", value=f"***Total Wins (all factions): {totalWins}+*** \n*Avg per role: {avgWins}+*", inline=False)
-    cStatsEmbed.add_field(name="", value=f"***Total Wins (all factions): {totalWins}+*** \n*Avg per role: {avgWins}+*", inline=False)
-    nStatsEmbed.add_field(name="", value=f"***Total Wins (all factions): {totalWins}+*** \n*Avg per role: {avgWins}+*", inline=False)
+    statsEmbed.add_field(name="Town Roles", value=townStr, inline=True)
+    statsEmbed.add_field(name="Coven Roles", value=covStr, inline=True)
+    statsEmbed.add_field(name="Neutral Roles", value=neutStr, inline=True)
+    statsEmbed.add_field(name="", value=f"***Total Wins (all factions): {totalWins}+*** \n*Avg per role: {avgWins}+*", inline=False)
+
 
     graphBuf = await asyncio.to_thread(graphing.genStackedProgressBarRoleBased, 
                                        ["town", "coven", "neutral"], 
@@ -282,14 +279,9 @@ async def sendWinTotals(interaction:discord.Interaction):
                                        [townMaxWins, covMaxWins, neutMaxWins], 
                                        [Tos2Info.getFactionColour("town"), Tos2Info.getFactionColour("coven"), Tos2Info.getFactionColour("executioner")])
     graph = discord.File(graphBuf, filename="winStats.png")
-    tStatsEmbed.set_image(url="attachment://winStats.png")
-    cStatsEmbed.set_image(url="attachment://winStats.png")
-    nStatsEmbed.set_image(url="attachment://winStats.png")
-
-    embeds = [tStatsEmbed, cStatsEmbed, nStatsEmbed]
-    view = utils.Pagination(embeds=embeds, interaction=interaction)
+    statsEmbed.set_image(url="attachment://winStats.png")
         
-    await interaction.followup.send(embed=embeds[0], view=view, file=graph)
+    await interaction.followup.send(embed=statsEmbed, file=graph)
 
 #----------------------------------------------------------------------------------------
 
