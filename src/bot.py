@@ -287,7 +287,7 @@ async def sendWinTotals(interaction:discord.Interaction):
     nStatsEmbed.set_image(url="attachment://winStats.png")
 
     embeds = [tStatsEmbed, cStatsEmbed, nStatsEmbed]
-    view = utils.Pagination(embeds)
+    view = utils.Pagination(embeds=embeds, interaction=interaction)
         
     await interaction.followup.send(embed=embeds[0], view=view, file=graph)
 

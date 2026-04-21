@@ -92,20 +92,33 @@ def getDateFromTime(unlockTime):
 #simple pagination to reduce the space taken by /winstats embeds
 
 class Pagination(discord.ui.View):
-    def __init__(self, embeds):
+    def __init__(self, interaction: discord.Interaction, embeds):
         super().__init__(timeout=60)
         self.embeds = embeds
         self.index = 0
 
-    @discord.ui.button(label="<--", style=discord.ButtonStyle.secondary)
+    async def checkInteraction (self, interaction: discord.Interaction):
+        if interaction.user == self.interaction.user:
+            return True
+        else:
+            return False
+
+    @discord.ui.button(label="<--", style=discord.ButtonStyle.primary)
     async def previous(self, interaction: discord.Interaction, button: discord.ui.button):
         self.index = (self.index - 1) % len(self.embeds)
-        await interaction.response.edit_message(embed=self.embeds[self.index], view=self) 
+        if(self.checkInteraction):
+            await interaction.response.edit_message(embed=self.embeds[self.index], view=self)
+        else:
+            await interaction.response.send_message(embed=errorEmbed("Only the author of the command can perform this action."), ephemeral=True)
+ 
 
-    @discord.ui.button(label="-->", style=discord.ButtonStyle.secondary)
+    @discord.ui.button(label="-->", style=discord.ButtonStyle.primary)
     async def next(self, interaction: discord.Interaction, button: discord.ui.button):
         self.index = (self.index + 1) % len(self.embeds)
-        await interaction.response.edit_message(embed=self.embeds[self.index], view=self)
+        if (self.checkInteraction):
+            await interaction.response.edit_message(embed=self.embeds[self.index], view=self)
+        else:
+            await interaction.response.send_message(embed=errorEmbed("Only the author of the command can perform this action."), ephemeral=True)
     
 #------------------------------------------------------------------------------------------------------
 #this is all for the big messy function that populates achInfo.json with info from various steamAPI endpoints. 
