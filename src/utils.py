@@ -87,6 +87,25 @@ def isAchCompleted(playerAchJson, achApiIndex):
     
 def getDateFromTime(unlockTime):
     return datetime.fromtimestamp(unlockTime, tz=timezone.utc).strftime("%m/%d/%Y")
+
+#------------------------------------------------------------------------------------------------------
+#simple pagination to reduce the space taken by /winstats embeds
+
+class Pagination(discord.ui.View):
+    def __init__(self, embeds):
+        super().__init__(timeout=60)
+        self.embeds = embeds
+        self.index = 0
+
+    @discord.ui.button(label="<--", style=discord.ButtonStyle.secondary)
+    async def previous(self, interaction: discord.Interaction, button: discord.ui.button):
+        self.index = (self.index - 1) % len(self.embeds)
+        await interaction.response.edit_message(embed=self.embeds[self.index], view=self) 
+
+    @discord.ui.button(label="-->", style=discord.ButtonStyle.secondary)
+    async def next(self, interaction: discord.Interaction, button: discord.ui.button):
+        self.index = (self.index + 1) % len(self.embeds)
+        await interaction.response.edit_message(embed=self.embeds[self.index], view=self)
     
 #------------------------------------------------------------------------------------------------------
 #this is all for the big messy function that populates achInfo.json with info from various steamAPI endpoints. 
