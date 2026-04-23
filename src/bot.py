@@ -253,7 +253,10 @@ async def sendWinTotals(interaction:discord.Interaction):
             case "Town":
                 townWins += roleWins
                 townMaxWins += 25
-                townStr += f"\n{Tos2Info.getRoleDisplayName(role)}: {roleWins}"
+                if (townMaxWins % 50) != 0:
+                    townStr += f"\n {Tos2Info.getRoleDisplayName(role)[:4]}: {roleWins} | "
+                else:
+                    townStr += f"{Tos2Info.getRoleDisplayName(role)[:4]}: {roleWins} "
             case "Coven":
                 covWins += roleWins
                 covMaxWins += 25
@@ -270,7 +273,7 @@ async def sendWinTotals(interaction:discord.Interaction):
     statsEmbed.add_field(name="Town Roles", value=townStr, inline=True)
     statsEmbed.add_field(name="Coven Roles", value=covStr, inline=True)
     statsEmbed.add_field(name="Neutral Roles", value=neutStr, inline=True)
-    statsEmbed.add_field(name="", value=f"***Total Wins (all factions): {totalWins}+*** \n*Avg per role: {avgWins}+*", inline=False)
+    statsEmbed.add_field(name="", value=f"***Total Wins: {totalWins}+*** \n*Avg per role: {avgWins}+*", inline=False)
 
 
     graphBuf = await asyncio.to_thread(graphing.genStackedProgressBarRoleBased, 
