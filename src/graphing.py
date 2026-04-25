@@ -34,7 +34,7 @@ def differColours(coloursList):
             recolourCount = 0
             while colour in outList:
                 recolourCount += 1
-                colour = changeColBrightness(colour, 1 + 0.35 * math.sin(recolourCount * 2.1))
+                colour = changeColBrightness(colour, 1 + 0.7 * math.sin(recolourCount * 2.1))
 
             outList.append(colour)
 
