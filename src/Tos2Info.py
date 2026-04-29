@@ -2,69 +2,6 @@
 #contains any manually-added tos2 role information not accessible by the steamAPI
 #also includes some getters to reduce the amount of redundant data
 
-from enum import Enum
-
-class Role(Enum):
-    ADMIRER = 1
-    AMNESIAC = 2
-    BODYGUARD = 3
-    CLERIC = 4
-    CATALYST = 59
-    CORONER = 5
-    CRUSADER = 6
-    DEPUTY = 7
-    INVESTIGATOR = 8
-    JAILOR = 9
-    LOOKOUT = 10
-    MARSHAL = 55
-    MAYOR = 11
-    MONARCH = 12
-    ORACLE = 56
-    PROSECUTOR = 13
-    PSYCHIC = 14
-    RETRIBUTIONIST = 15
-    SEER = 16
-    SHERIFF = 17
-    SOCIALITE = 54
-    SPY = 18
-    TAVERNKEEPER = 19
-    TRACKER = 20
-    TRAPPER = 21
-    TRICKSTER = 22
-    VETERAN = 23
-    VIGILANTE = 24
-    CONJURER = 25
-    ARCHMAGE = 26
-    CULTIST = 60
-    DREAMWEAVER = 27
-    ENCHANTER = 28
-    HEXMASTER = 39
-    ILLUSIONIST = 40
-    JINX = 31
-    MEDUSA = 32
-    NECROMANCER = 33
-    POISONER = 34
-    POTIONMASTER = 35
-    RITUALIST = 36
-    VOODOOMASTER = 37
-    WILDLING = 38
-    WITCH = 39
-    ARSONIST = 40
-    BAKER = 41
-    BERSERKER = 42
-    CURSEDSOUL = 53
-    DOOMSAYER = 43
-    EXECUTIONER = 44
-    JESTER = 45
-    PIRATE = 46
-    PLAGUEBEARER = 47
-    SERIALKILLER = 48
-    SHROUD = 49
-    SOULCOLLECTOR = 50
-    WEREWOLF = 51
-    VAMPIRE = 52
-
-
 roleInfo = {
     "admirer": {
         "alignment": ("Town", "Support"),
