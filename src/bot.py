@@ -474,7 +474,7 @@ async def genRoleFactionCode(interaction:discord.Interaction, role_name:str,
 
     fID = Tos2Info.factionIDs[factionName]
     
-    cEmbed = discord.Embed(title=f"Code for {faction_name} aligned {role_name}:", description=f"[[#{rID},{fID}]]", color=Tos2Info.getFactionColour(factionName))
+    cEmbed = discord.Embed(title=f"Code for {faction_name} aligned {Tos2Info.getRoleDisplayName(roleName)}:", description=f"[[#{rID},{fID}]]", color=Tos2Info.getFactionColour(factionName))
 
     await interaction.response.send_message(embed=cEmbed)
     
