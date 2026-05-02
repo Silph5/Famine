@@ -165,7 +165,7 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
             else:
                 endStr = " - :x:"
         if ach["isSecret"]:
-            aEmbed.add_field(name=(f"||{ach["displayName"]}|| (secret) {endStr}"), value=f"{dateStr}||{Tos2Info.roleInfo[roleName]["hiddenDesc"]}||\n-# `{ach["percent"]}% of players unlocked`", inline=False)
+            aEmbed.add_field(name=(f"||{ach["displayName"]}|| (s) {endStr}"), value=f"{dateStr}||{Tos2Info.roleInfo[roleName]["hiddenDesc"]}||\n-# `{ach["percent"]}% of players unlocked`", inline=False)
         else:
             aEmbed.add_field(name=(f"{ach["displayName"]} {endStr}"), value=f"{dateStr}{ach["description"]}\n-# `{ach["percent"]}% of players unlocked`",inline=False)
 
