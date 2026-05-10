@@ -268,7 +268,7 @@ roleInfo = {
         "alignment": ("Neutral", "Evil"),
         "colour": "0xF5A6D4",
         "id": 45,
-        "hiddenDesc": "Free from Guilt"
+        "hiddenDesc": "Haunt someone who cannot die"
     },
     "pirate": {
         "alignment": ("Neutral", "Evil"),
