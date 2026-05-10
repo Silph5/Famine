@@ -26,7 +26,7 @@ roleInfo = {
     "catalyst": {
         "alignment": ("Town", "Outlier"),
         "id": 59,
-        #cata is missing its secret ach from the api due to improper naming, will fix later
+        "hiddenDesc": "Become overcharged as a Catalyst"
     },
     "coroner": {
         "alignment": ("Town", "Investigative"),

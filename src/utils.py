@@ -137,6 +137,10 @@ def getAchievementRoleAndCategory(achName):
     else:
         achCategory = "generalAchievements"
         roleName = wordsArray[0].lower()
+        
+        #this annoys me but is necessary ebcause cata's secret ach is named irregularly in the steam web api
+        if (achName == "BecomeOverchargedAsCatalyst"): 
+            roleName = "cata"
     
     roleName = Tos2Info.aliasLookup.get(roleName, roleName)
     
