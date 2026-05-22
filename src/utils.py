@@ -146,7 +146,6 @@ def getAchievementRoleAndCategory(achName):
     
     if not roleName in Tos2Info.roleInfo:
         roleName = "misc"
-        achCategory = "generalAchievements"
 
     return roleName, achCategory
 
@@ -156,7 +155,8 @@ def updateAchInfoJson(steamKey):
     newDictForJson = {}
     newDictForJson["misc"] = {
         "icon":"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/2140510/b2570c971297dba7fd62abd5f66d877ff99e31b5.jpg",
-        "generalAchievements":[]
+        "generalAchievements":[],
+        "winAchievements":[]
     }
 
     response = requests.get("https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/", params={"key":steamKey, "appid":"2140510"})

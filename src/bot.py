@@ -123,7 +123,6 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
         await interaction.followup.send(embed=utils.errorEmbed("Command cannot be used in this channel."))
         return
 
-    initialRoleName = role_name
     roleName = role_name.lower().replace(" ", "")
     
     async with aiofiles.open(utils.achInfoPath, "r") as f:
@@ -135,6 +134,11 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
     if not roleName in achInfoDict:
         await interaction.followup.send(embed=utils.errorEmbed("Failed to fetch achievements: couldnt find role."))
         return
+    
+    gettingMisc = False
+    if roleName == "misc":
+        gettingMisc = True
+
     
     async with aiofiles.open(utils.steamLinkPath, "r") as f:
         data = await f.read()
@@ -153,7 +157,8 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
         authorStatsReachable = False
         
     aEmbed = discord.Embed(title=f"Achievements for {Tos2Info.getRoleDisplayName(roleName)}:",color=Tos2Info.getRoleColour(roleName))
-    aEmbed.set_thumbnail(url=achInfoDict[roleName]["generalAchievements"][0]["icon"])
+    if roleName != "misc":
+        aEmbed.set_thumbnail(url=achInfoDict[roleName]["generalAchievements"][0]["icon"])
 
     for ach in achInfoDict[roleName]["generalAchievements"]:
         endStr = ""
@@ -165,11 +170,24 @@ async def sendRoleAchInfo(interaction: discord.Interaction, role_name: str):
             else:
                 endStr = " - :x:"
         if ach["isSecret"]:
-            aEmbed.add_field(name=(f"||{ach["displayName"]}|| (s) {endStr}"), value=f"{dateStr}||{Tos2Info.roleInfo[roleName]["hiddenDesc"]}||\n-# `{ach["percent"]}% of players unlocked`", inline=False)
+            aEmbed.add_field(name=(f"||{ach["displayName"]}|| (s) {endStr}"), value=f"{dateStr}||{Tos2Info.roleInfo[roleName]["hiddenDesc"]}||\n-# `{ach["percent"]}% of players unlocked`", inline=gettingMisc)
         else:
-            aEmbed.add_field(name=(f"{ach["displayName"]} {endStr}"), value=f"{dateStr}{ach["description"]}\n-# `{ach["percent"]}% of players unlocked`",inline=False)
+            aEmbed.add_field(name=(f"{ach["displayName"]} {endStr}"), value=f"{dateStr}{ach["description"]}\n-# `{ach["percent"]}% of players unlocked`",inline=gettingMisc)
 
-    if accountLinked and authorStatsReachable:
+    if gettingMisc:
+        for ach in achInfoDict[roleName]["winAchievements"]:
+            endStr = ""
+            dateStr = ""
+            if accountLinked and authorStatsReachable:
+                if utils.isAchCompleted(authorAchStats, ach["apiIndex"]):
+                    endStr = " - :white_check_mark:"
+                    dateStr = f"-# {utils.getDateFromTime(authorAchStats["playerstats"]["achievements"][ach["apiIndex"]]["unlocktime"])}\n"
+                else:
+                    endStr = " - :x:"
+
+            aEmbed.add_field(name=(f"{ach["displayName"]} {endStr}"), value=f"{dateStr}{ach["description"]}\n-# `{ach["percent"]}% of players unlocked`",inline=True)
+
+    if accountLinked and authorStatsReachable and not gettingMisc:
         winAmtArr = [1, 5, 10, 25]
         roleWins = 0
 
