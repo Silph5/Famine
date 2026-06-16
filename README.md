@@ -5,6 +5,15 @@ Famine is written entirely in python and interfaces with the Steam Web API via H
 
 The bots privacy policy contains exhaustive information on what data the bot collects and how much of that data is stored.
 https://github.com/Silph5/Famine-docs-legal
+## Install
+https://discord.com/oauth2/authorize?client_id=1433447980085547128
+Copy this link into a discord channel and click it to install the bot (or simply click it in github if you use web discord)
+
+You will be given the option to install the bot either on a discord server or on your account. 
+
+If installed on a server, you and other users in that server will be able to use the bot. You may want to see Admin Commands for optional configuration of the bot on your server.
+
+If installed on your account, you will be able to use the bot's commands in any server and, depending on your permissions in that server, the bot's responses may be visible only to you.
 ## Basic Commands
 ### /faminehelp
 /faminehelp is Famine's /help command equivalent, and will produce an embed with a description of every command available to the bot.
