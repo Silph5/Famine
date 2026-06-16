@@ -47,13 +47,13 @@ It will also show all the current bot settings for the guild it is used in.
 
 ### f!restrictToChannel
 Restricts command usages by non-admins to a specific channel. 
-Takes either the channel ID or a link to the channel as the argument. To lift the restriction, use "none" as the parameter.
+Takes either the channel ID or a link to the channel as the argument. To lift the restriction, use "none" as the argument.
 
 Usage example: `f!restrictToChannel 1433446281514188872`
 
 ### f!setUpdatesChannel
 Sets the channel in which the bot will send patch notes when it is updated. 
-Takes either the channel ID or a link to the channel as the argument. To disable this feature, type "none" as the parameter.
+Takes either the channel ID or a link to the channel as the argument. To disable this feature, type "none" as the argument.
 
 Usage example: `f!setUpdatesChannel 1433446281514188872`
 
